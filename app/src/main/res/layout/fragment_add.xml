@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AddFragment">
+
+    <Button
+        android:id="@+id/btnAddPlantToList"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="56dp"
+        android:text="Add Plant to List"
+        app:layout_constraintEnd_toEndOf="@+id/btnAddPicture"
+        app:layout_constraintStart_toStartOf="@+id/btnAddPicture"
+        app:layout_constraintTop_toBottomOf="@+id/btnAddPicture" />
+
+    <EditText
+        android:id="@+id/editTextTextPlantName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="96dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="@string/plant_name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/editTextTextPlantDescription"
+        android:layout_width="402dp"
+        android:layout_height="169dp"
+        android:layout_marginTop="32dp"
+        android:ems="10"
+        android:gravity="start|top"
+        android:inputType="textMultiLine"
+        android:text="@string/description"
+        app:layout_constraintEnd_toEndOf="@+id/editTextTextPlantName"
+        app:layout_constraintStart_toStartOf="@+id/editTextTextPlantName"
+        app:layout_constraintTop_toBottomOf="@+id/editTextTextPlantName" />
+
+    <ImageView
+        android:id="@+id/addPictureImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
+        app:layout_constraintEnd_toEndOf="@+id/editTextTextPlantDescription"
+        app:layout_constraintStart_toStartOf="@+id/editTextTextPlantDescription"
+        app:layout_constraintTop_toBottomOf="@+id/editTextTextPlantDescription"
+        tools:src="@tools:sample/avatars" />
+
+    <Button
+        android:id="@+id/btnAddPicture"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Add Image"
+        app:layout_constraintEnd_toEndOf="@+id/addPictureImageView"
+        app:layout_constraintStart_toStartOf="@+id/addPictureImageView"
+        app:layout_constraintTop_toBottomOf="@+id/addPictureImageView" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
