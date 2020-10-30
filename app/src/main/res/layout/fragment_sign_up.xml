@@ -7,7 +7,7 @@
     tools:context="fragments.HomeFragment">
 
     <EditText
-        android:id="@+id/editTextTextUsername"
+        android:id="@+id/editTextTextUsernameSignUp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="278dp"
@@ -22,26 +22,35 @@
 
 
     <Button
-        android:id="@+id/btnLogin"
+        android:id="@+id/btnSignUp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="160dp"
         android:layout_marginRight="160dp"
         android:layout_marginBottom="260dp"
-        android:text="Login"
+        android:text="Sign Up"
         android:textColor="@android:color/black"
         app:iconTint="@color/ic_banner_background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
     <EditText
-        android:id="@+id/editTextTextPassword"
+        android:id="@+id/editTextTextPasswordSignUp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textPassword"
-        app:layout_constraintEnd_toEndOf="@+id/editTextTextUsername"
-        app:layout_constraintStart_toStartOf="@+id/editTextTextUsername"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextUsername" />
+        app:layout_constraintEnd_toEndOf="@+id/editTextTextUsernameSignUp"
+        app:layout_constraintStart_toStartOf="@+id/editTextTextUsernameSignUp"
+        app:layout_constraintTop_toBottomOf="@+id/editTextTextUsernameSignUp" />
+    <EditText
+        android:id="@+id/editTextTextPasswordSignUpReEnter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPassword"
+        app:layout_constraintEnd_toEndOf="@+id/editTextTextPasswordSignUp"
+        app:layout_constraintStart_toStartOf="@+id/editTextTextPasswordSignUp"
+        app:layout_constraintTop_toBottomOf="@+id/editTextTextPasswordSignUp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

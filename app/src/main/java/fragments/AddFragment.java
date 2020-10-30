@@ -1,4 +1,4 @@
-package ezim.growme;
+package fragments;
 
 import android.content.Intent;
 
@@ -20,6 +20,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 
+import ezim.growme.R;
 import model.Plant;
 
 import static android.app.Activity.RESULT_OK;
@@ -71,7 +72,7 @@ public class AddFragment extends Fragment {
                 Plant.addImages(R.drawable.sunflower);
                 Plant.addTypes(plantType);
 
-                AddFragmentDirections.ActionAddFragmentToHomeFragment  action = AddFragmentDirections.actionAddFragmentToHomeFragment();
+                AddFragmentDirections.ActionAddFragmentToHomeFragment action = AddFragmentDirections.actionAddFragmentToHomeFragment();
                 Navigation.findNavController(view).navigate(action);
             }
         });
