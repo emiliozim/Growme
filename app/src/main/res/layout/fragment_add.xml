@@ -11,45 +11,45 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="56dp"
-        android:text="Add Plant to List"
+        android:text="@string/add_plant_to_list"
         app:layout_constraintEnd_toEndOf="@+id/btnAddPicture"
         app:layout_constraintStart_toStartOf="@+id/btnAddPicture"
         app:layout_constraintTop_toBottomOf="@+id/btnAddPicture" />
 
     <EditText
-        android:id="@+id/editTextTextPlantName"
+        android:id="@+id/editTextTextPlantNameDetails"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="96dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="@string/plant_name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:hint="@string/plant_name"/>
 
     <EditText
-        android:id="@+id/editTextTextPlantDescription"
+        android:id="@+id/editTextTextPlantDescriptionDetails"
         android:layout_width="402dp"
         android:layout_height="169dp"
         android:layout_marginTop="32dp"
         android:ems="10"
         android:gravity="start|top"
         android:inputType="textMultiLine"
-        android:text="@string/description"
-        app:layout_constraintEnd_toEndOf="@+id/editTextTextPlantName"
-        app:layout_constraintStart_toStartOf="@+id/editTextTextPlantName"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPlantName" />
+        app:layout_constraintEnd_toEndOf="@+id/editTextTextPlantNameDetails"
+        app:layout_constraintStart_toStartOf="@+id/editTextTextPlantNameDetails"
+        app:layout_constraintTop_toBottomOf="@+id/editTextTextPlantNameDetails"
+        android:hint="@string/description"/>
 
     <ImageView
         android:id="@+id/addPictureImageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="108dp"
+        android:layout_height="126dp"
         android:layout_marginTop="36dp"
-        app:layout_constraintEnd_toEndOf="@+id/editTextTextPlantDescription"
-        app:layout_constraintStart_toStartOf="@+id/editTextTextPlantDescription"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPlantDescription"
+        app:layout_constraintEnd_toEndOf="@+id/editTextTextPlantDescriptionDetails"
+        app:layout_constraintStart_toStartOf="@+id/editTextTextPlantDescriptionDetails"
+        app:layout_constraintTop_toBottomOf="@+id/editTextTextPlantDescriptionDetails"
         tools:src="@tools:sample/avatars" />
 
     <Button
@@ -57,7 +57,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:text="Add Image"
+        android:text="@string/add_image"
         app:layout_constraintEnd_toEndOf="@+id/addPictureImageView"
         app:layout_constraintStart_toStartOf="@+id/addPictureImageView"
         app:layout_constraintTop_toBottomOf="@+id/addPictureImageView" />

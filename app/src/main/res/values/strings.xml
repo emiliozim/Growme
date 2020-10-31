@@ -13,4 +13,8 @@
     <string name="enter_password">Enter password</string>
     <string name="retype_password">Retype password</string>
     <string name="login">Login</string>
+    <string name="add_plant_to_list">Add Plant to List</string>
+    <string name="add_image">Add Image</string>
+    <string name="username_man_com">username@man.com</string>
+    <string name="_123456">123456</string>
 </resources>

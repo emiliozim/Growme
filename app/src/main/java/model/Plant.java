@@ -2,28 +2,37 @@ package model;
 
 
 
+import com.google.firebase.storage.FirebaseStorage;
+
 import java.util.ArrayList;
+import java.util.List;
 
 import ezim.growme.R;
 
 public class Plant {
-    private int imageID;
-    private String type, description;
+
+    private String type, description, uid, imageID;
     public static ArrayList<String>  descriptionList = new ArrayList<String>();
     public static ArrayList<String>  typeList = new ArrayList<String>();
-    public static ArrayList<Integer>  imageList = new ArrayList<Integer>();
+    public static ArrayList<String>  imageList = new ArrayList<>();
+    public  List<Plant> plantList = new ArrayList<>();
 
     public Plant(){
 
     }
 
-    public Plant(int imageID, String type, String description){
+    public Plant(String imageID, String type, String description){
+        this.imageID = imageID;
+        this.type = type;
+        this.description = description;
+    }
+    public Plant(String type, String description){
         this.imageID = imageID;
         this.type = type;
         this.description = description;
     }
 
-    public int getImageID() {
+    public String getImageID() {
         return imageID;
     }
 
@@ -31,11 +40,19 @@ public class Plant {
         return type;
     }
 
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
+
     public String getDescription() {
         return description;
     }
 
-    public void setImageID(int imageID) {
+    public void setImageID(String imageID) {
         this.imageID = imageID;
     }
 
@@ -50,7 +67,7 @@ public class Plant {
     public static ArrayList<Plant> getData(){
         ArrayList<Plant> plantList = new ArrayList<>();
 
-        ArrayList<Integer> images = imageList;
+        ArrayList<String> images = imageList;
         ArrayList<String> types = typeList;
         ArrayList<String> descriptions = descriptionList;
 
@@ -63,14 +80,14 @@ public class Plant {
         return plantList;
     }
 
-    public static ArrayList<Integer> getImages(){
+   /* public static ArrayList<Integer> getImages(){
         imageList.add(R.drawable.basilicum);
         imageList.add(R.drawable.thyme);
         imageList.add(R.drawable.oregano);
         imageList.add(R.drawable.tomatillo);
 
         return  imageList;
-    }
+    }/*
     public static ArrayList<String> getTypes(){
 
         typeList.add("Basil");
@@ -98,9 +115,11 @@ public class Plant {
         typeList.add(string);
         return typeList;
     }
-    public static ArrayList<Integer> addImages(int n){
+   /* public static ArrayList<Integer> addImages(String n){
         imageList.add(n);
 
         return  imageList;
-    }
+    }*/
+
+
 }

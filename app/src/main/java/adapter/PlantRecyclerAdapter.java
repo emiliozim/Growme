@@ -4,19 +4,31 @@ package adapter;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
+import android.widget.Toast;
+//import com.bumptech.glide.Glide;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.ActionOnlyNavDirections;
+import androidx.navigation.NavDirections;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.bumptech.glide.Glide;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.List;
 
 import ezim.growme.R;
+import fragments.DetailsPlantFragment;
+import fragments.HomeFragment;
+import fragments.HomeFragmentDirections;
+import fragments.LoginFragmentDirections;
 import model.Plant;
 
 public class PlantRecyclerAdapter extends RecyclerView.Adapter<PlantRecyclerAdapter.PlantViewHolder> {
@@ -24,6 +36,7 @@ public class PlantRecyclerAdapter extends RecyclerView.Adapter<PlantRecyclerAdap
 
     private List<Plant> plantList;
     private LayoutInflater inflater;
+
 
 
     public PlantRecyclerAdapter(Context context, List<Plant> plantList) {
@@ -74,11 +87,10 @@ public class PlantRecyclerAdapter extends RecyclerView.Adapter<PlantRecyclerAdap
         private Plant plant;
         private ImageView deleteImageView;
 
-
         public PlantViewHolder(@NonNull View itemView) {
             super(itemView);
             typeTextView = itemView.findViewById(R.id.plantNameTextView);
-            descriptionTextView = itemView.findViewById(R.id.descriptionTextView);
+
             thumbnailImageView = itemView.findViewById(R.id.thumbnailImageView);
             deleteImageView = itemView.findViewById(R.id.deleteImageView);
 
@@ -88,8 +100,17 @@ public class PlantRecyclerAdapter extends RecyclerView.Adapter<PlantRecyclerAdap
 
         public void setPlant(Plant plantToDisplay, int position) {
             typeTextView.setText(plantToDisplay.getType());
-            descriptionTextView.setText(plantToDisplay.getDescription());
-            thumbnailImageView.setImageResource(plantToDisplay.getImageID());
+            String plantImage = plantToDisplay.getImageID();
+
+
+            if (plantImage != null && !plantImage.equals("")){
+                Glide.with(thumbnailImageView.getContext())
+                        .load(plantImage).
+                        into(thumbnailImageView);
+            }else{
+                thumbnailImageView.setImageResource(R.drawable.basilicum);
+            }
+
 
             this.plant = plantToDisplay;
             this.position = position;
@@ -127,8 +148,17 @@ public class PlantRecyclerAdapter extends RecyclerView.Adapter<PlantRecyclerAdap
                   alert11.show();
 
                    break;
+
                default:
-                   //Toast.makeText(view.getContext(), getLayoutPosition(), Toast.LENGTH_SHORT).show();
+                   // HomeFragmentDirections.Action
+                   //LoginFragmentDirections.ActionLoginFragmentToHomeFragment action = LoginFragmentDirections.actionLoginFragmentToHomeFragment();
+                   //action.setUsername(plantList.get(position));
+                   //Navigation.findNavController(view).navigate(action);
+                   HomeFragmentDirections.ActionHomeFragmentToDetailsPlantFragment action = HomeFragmentDirections.actionHomeFragmentToDetailsPlantFragment(plantList.get(position).getUid());
+                   action.setPlantUid(plantList.get(position).getUid());
+                   Navigation.findNavController(view).navigate(action);
+
+
            }
         }
     }

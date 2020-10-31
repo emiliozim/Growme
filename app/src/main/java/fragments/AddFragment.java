@@ -20,6 +20,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 import ezim.growme.R;
 import model.Plant;
 
@@ -33,7 +36,8 @@ public class AddFragment extends Fragment {
     Uri imageUri;
     ImageView imageView;
     Button buttonAddPicture, buttonAddPlantToList;
-
+    private FirebaseFirestore firebaseDB;
+    private CollectionReference plantCollectionReference;
 
 
     public AddFragment() {
@@ -51,7 +55,8 @@ public class AddFragment extends Fragment {
          imageView = view.findViewById(R.id.addPictureImageView);
          buttonAddPicture =  view.findViewById(R.id.btnAddPicture);
          buttonAddPlantToList = view.findViewById(R.id.btnAddPlantToList);
-
+        firebaseDB = FirebaseFirestore.getInstance();
+        plantCollectionReference = firebaseDB.collection("plant");
 
         buttonAddPicture.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,15 +67,13 @@ public class AddFragment extends Fragment {
         buttonAddPlantToList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                EditText editPlantDescription = getView().findViewById(R.id.editTextTextPlantDescription);
-                EditText editPlantType = getView().findViewById(R.id.editTextTextPlantName);
+                EditText editPlantDescription = getView().findViewById(R.id.editTextTextPlantDescriptionDetails);
+                EditText editPlantType = getView().findViewById(R.id.editTextTextPlantNameDetails);
 
                 String plantType = editPlantType.getText().toString();
                 String plantDescription = editPlantDescription.getText().toString();
+                plantCollectionReference.add(new Plant(plantType,plantDescription));
 
-                Plant.addDescription(plantDescription);
-                Plant.addImages(R.drawable.sunflower);
-                Plant.addTypes(plantType);
 
                 AddFragmentDirections.ActionAddFragmentToHomeFragment action = AddFragmentDirections.actionAddFragmentToHomeFragment();
                 Navigation.findNavController(view).navigate(action);

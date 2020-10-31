@@ -15,7 +15,7 @@
         android:layout_marginRight="101dp"
         android:ems="10"
         android:inputType="textPersonName"
-
+        android:text="@string/username_man_com"
         android:textColor="@android:color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -41,6 +41,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:text="@string/_123456"
         android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="@+id/editTextTextUsername"
         app:layout_constraintStart_toStartOf="@+id/editTextTextUsername"
@@ -57,5 +58,7 @@
         app:layout_constraintBottom_toTopOf="@+id/editTextTextUsername"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

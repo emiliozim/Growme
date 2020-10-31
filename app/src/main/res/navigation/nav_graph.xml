@@ -25,6 +25,9 @@
         <action
             android:id="@+id/action_homeFragment_to_addFragment"
             app:destination="@id/addFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_detailsPlantFragment"
+            app:destination="@id/detailsPlantFragment" />
     </fragment>
     <fragment
         android:id="@+id/addFragment"
@@ -54,5 +57,14 @@
         <action
             android:id="@+id/action_signUpFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailsPlantFragment"
+        android:name="fragments.DetailsPlantFragment"
+        android:label="fragment_details_plant"
+        tools:layout="@layout/fragment_details_plant" >
+        <argument
+            android:name="plantUid"
+            app:argType="string" />
     </fragment>
 </navigation>

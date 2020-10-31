@@ -58,9 +58,9 @@ public class LoginFragment extends Fragment {
                     progressBar.setVisibility(View.INVISIBLE);
                     btn.setEnabled(true);
                     String username = editUsername.getText().toString() + "'s" + " plant list";
-                    Plant.getDescriptions();
+                   /* Plant.getDescriptions();
                     Plant.getImages();
-                    Plant.getTypes();
+                    Plant.getTypes();*/
                     LoginFragmentDirections.ActionLoginFragmentToHomeFragment action = LoginFragmentDirections.actionLoginFragmentToHomeFragment();
                     action.setUsername(username);
                     Navigation.findNavController(objectView).navigate(action);
