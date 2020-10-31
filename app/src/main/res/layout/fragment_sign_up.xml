@@ -7,7 +7,7 @@
     tools:context="fragments.HomeFragment">
 
     <EditText
-        android:id="@+id/editTextTextUsername"
+        android:id="@+id/editTextTextUsernameSignUp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="278dp"
@@ -15,7 +15,6 @@
         android:layout_marginRight="101dp"
         android:ems="10"
         android:inputType="textPersonName"
-
         android:textColor="@android:color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -23,29 +22,39 @@
 
 
     <Button
-        android:id="@+id/btnLogin"
+        android:id="@+id/btnSignUp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="160dp"
         android:layout_marginRight="160dp"
         android:layout_marginBottom="260dp"
-        android:text="@string/login"
+        android:text="@string/sign_up"
         android:textColor="@android:color/black"
         app:iconTint="@color/ic_banner_background"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-       />
+        app:layout_constraintEnd_toEndOf="parent"/>
+
 
     <EditText
-        android:id="@+id/editTextTextPassword"
+        android:id="@+id/editTextTextPasswordSignUp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textPassword"
-        app:layout_constraintEnd_toEndOf="@+id/editTextTextUsername"
-        app:layout_constraintStart_toStartOf="@+id/editTextTextUsername"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextUsername"
+        app:layout_constraintEnd_toEndOf="@+id/editTextTextUsernameSignUp"
+        app:layout_constraintStart_toStartOf="@+id/editTextTextUsernameSignUp"
+        app:layout_constraintTop_toBottomOf="@+id/editTextTextUsernameSignUp"
         android:hint="@string/enter_password"/>
+    <EditText
+        android:id="@+id/editTextTextPasswordSignUpReEnter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPassword"
+        app:layout_constraintEnd_toEndOf="@+id/editTextTextPasswordSignUp"
+        app:layout_constraintStart_toStartOf="@+id/editTextTextPasswordSignUp"
+        app:layout_constraintTop_toBottomOf="@+id/editTextTextPasswordSignUp"
+        android:hint="@string/retype_password"/>
 
     <ProgressBar
         android:id="@+id/progressBarLogIn"
@@ -54,7 +63,7 @@
         android:layout_height="67dp"
         android:layout_marginBottom="32dp"
         android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@+id/editTextTextUsername"
+        app:layout_constraintBottom_toTopOf="@+id/editTextTextUsernameSignUp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
