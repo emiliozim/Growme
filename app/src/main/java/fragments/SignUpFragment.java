@@ -3,15 +3,16 @@ package fragments;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -23,73 +24,87 @@ import ezim.growme.R;
 
 public class SignUpFragment extends Fragment {
 
-    View objectSignUpFragment;
-    private EditText username, password;
+
+    private EditText username, password, rePassword;
     private FirebaseAuth firebaseAuth;
     private Button btnSignUp;
+    private ProgressBar progressBar;
+    private View objectView;
+
+
     public SignUpFragment() {
         // Required empty public constructor
     }
 
-    public void createUser(){
+   public void createUser(EditText username, EditText password, EditText rePassword){
         try {
 
-           if(!username.getText().toString().isEmpty() && !password.getText().toString().isEmpty()){
-                firebaseAuth.createUserWithEmailAndPassword(username.getText().toString(), password.getText().toString()).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
-                    @Override
-                    public void onSuccess(AuthResult authResult) {
-                        Toast.makeText(getContext(), "User Created", Toast.LENGTH_SHORT).show();
-                        if(firebaseAuth.getCurrentUser() != null){
-                            firebaseAuth.signOut();
+               if(password.getText().toString().equals(rePassword.getText().toString())) {
+                   progressBar.setVisibility(View.VISIBLE);
+                   btnSignUp.setEnabled(false);
+                   firebaseAuth.createUserWithEmailAndPassword(username.getText().toString(), password.getText().toString()).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+                       @Override
+                       public void onSuccess(AuthResult authResult) {
+                           Toast.makeText(getContext(), "User Created", Toast.LENGTH_SHORT).show();
+                           progressBar.setVisibility(View.INVISIBLE);
+                           btnSignUp.setEnabled(true);
+                           Navigation.findNavController(objectView).navigate(SignUpFragmentDirections.actionSignUpFragmentToLoginFragment());
 
-                        }
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                           if (firebaseAuth.getCurrentUser() != null) {
+                               firebaseAuth.signOut();
 
-                    }
-                });
+                           }
+                       }
+                   }).addOnFailureListener(new OnFailureListener() {
+                       @Override
+                       public void onFailure(@NonNull Exception e) {
+                           progressBar.setVisibility(View.INVISIBLE);
+                           btnSignUp.setEnabled(true);
+                           Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
 
-           }else{
-               Toast.makeText(getContext(), "Fill in input", Toast.LENGTH_SHORT).show();
-           }
+                       }
+                   });
+
+               }else {
+                   Toast.makeText(getContext(), "Passwords do not match", Toast.LENGTH_SHORT).show();
+               }
         }
         catch (Exception e){
             Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+            progressBar.setVisibility(View.INVISIBLE);
+            btnSignUp.setEnabled(true);
         }
     }
-    private void attachToXML(){
-        try {
-
-            username = objectSignUpFragment.findViewById(R.id.editTextTextUsernameSignUp);
-            password = objectSignUpFragment.findViewById(R.id.editTextTextPasswordSignUp);
-            btnSignUp = objectSignUpFragment.findViewById(R.id.btnSignUp);
-            firebaseAuth = FirebaseAuth.getInstance();
-            btnSignUp.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Log.d("new", "good");
-                    createUser();
-                    btnSignUp.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_signUpFragment_to_loginFragment));
-
-                }
-            });
-        }
-        catch (Exception e){
-            Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
-        }
-    }
-
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        objectSignUpFragment = inflater.inflate(R.layout.fragment_sign_up, container, false);
-        attachToXML();
+        objectView = inflater.inflate(R.layout.fragment_sign_up, container, false);
 
-        return objectSignUpFragment;
+
+        return objectView;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        firebaseAuth = FirebaseAuth.getInstance();
+        btnSignUp = view.findViewById(R.id.btnSignUp);
+        username = view.findViewById(R.id.editTextTextUsernameSignUp);
+        password =  view.findViewById(R.id.editTextTextPasswordSignUp);
+        progressBar = view.findViewById(R.id.progressBarLogIn);
+        rePassword = view.findViewById(R.id.editTextTextPasswordSignUpReEnter);
+        btnSignUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+                createUser(username, password ,rePassword);
+
+            }
+        });
+        ;
+
     }
 }

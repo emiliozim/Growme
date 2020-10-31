@@ -8,4 +8,9 @@
     <string name="description">Description</string>
     <string name="sign_up">Sign Up</string>
     <string name="log_in">Log In</string>
+    <string name="enter_email">Enter Email</string>
+
+    <string name="enter_password">Enter password</string>
+    <string name="retype_password">Retype password</string>
+    <string name="login">Login</string>
 </resources>
