@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "58341153228",
+    "firebase_url": "https://growme-15824.firebaseio.com",
+    "project_id": "growme-15824",
+    "storage_bucket": "growme-15824.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:58341153228:android:282be46c67393db26de569",
+        "android_client_info": {
+          "package_name": "ezim.growme"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "58341153228-02q344385jnl2roqv7hpd8gqmdsiv0lk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDtaD6TrXRzCpP0TSMEyvmEhrBFAGW4kgY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "58341153228-02q344385jnl2roqv7hpd8gqmdsiv0lk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
