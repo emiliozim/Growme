@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,10 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.List;
@@ -36,12 +41,14 @@ public class PlantRecyclerAdapter extends RecyclerView.Adapter<PlantRecyclerAdap
 
     private List<Plant> plantList;
     private LayoutInflater inflater;
-
+    private FirebaseFirestore firebaseDB;
+    private CollectionReference plantCollectionReference;
 
 
     public PlantRecyclerAdapter(Context context, List<Plant> plantList) {
         this.inflater = LayoutInflater.from(context);
         this.plantList = plantList;
+        Log.d("emilio", "nr 4: size = " + new Integer(plantList.size()).toString());
     }
 
     @NonNull
@@ -50,6 +57,7 @@ public class PlantRecyclerAdapter extends RecyclerView.Adapter<PlantRecyclerAdap
         //Log.d(TAG, "onCreateViewHolder");
         View itemView = inflater.inflate(R.layout.plant_item_recycler_view, parent, false);
 
+        Log.d("emilio", "nr 5: size = " + new Integer(plantList.size()).toString());
         return new PlantViewHolder(itemView);
     }
 
@@ -58,7 +66,9 @@ public class PlantRecyclerAdapter extends RecyclerView.Adapter<PlantRecyclerAdap
 
         Plant plantToDisplay = plantList.get(position);
         //Log.d(TAG, "onBindViewHolder" + plantToDisplay.getType() + " - " + position);
+
         viewHolder.setPlant(plantToDisplay, position);
+        Log.d("emilio", "nr 6: size = " + new Integer(plantList.size()).toString());
     }
 
     @Override
@@ -70,6 +80,9 @@ public class PlantRecyclerAdapter extends RecyclerView.Adapter<PlantRecyclerAdap
         plantList.remove(position);
         notifyItemRemoved(position);
         notifyItemRangeChanged(position, plantList.size());
+
+
+
 
     }
 
@@ -90,12 +103,14 @@ public class PlantRecyclerAdapter extends RecyclerView.Adapter<PlantRecyclerAdap
         public PlantViewHolder(@NonNull View itemView) {
             super(itemView);
             typeTextView = itemView.findViewById(R.id.plantNameTextView);
-
+            firebaseDB = FirebaseFirestore.getInstance();
+            plantCollectionReference = firebaseDB.collection("plant");
             thumbnailImageView = itemView.findViewById(R.id.thumbnailImageView);
             deleteImageView = itemView.findViewById(R.id.deleteImageView);
 
             itemView.setOnClickListener(this);
             deleteImageView.setOnClickListener(this);
+            Log.d("emilio", "nr 7: size = " + new Integer(plantList.size()).toString());
         }
 
         public void setPlant(Plant plantToDisplay, int position) {
@@ -108,7 +123,7 @@ public class PlantRecyclerAdapter extends RecyclerView.Adapter<PlantRecyclerAdap
                         .load(plantImage).
                         into(thumbnailImageView);
             }else{
-                thumbnailImageView.setImageResource(R.drawable.basilicum);
+                thumbnailImageView.setImageResource(R.drawable.imageholder);
             }
 
 
@@ -154,6 +169,7 @@ public class PlantRecyclerAdapter extends RecyclerView.Adapter<PlantRecyclerAdap
                    //LoginFragmentDirections.ActionLoginFragmentToHomeFragment action = LoginFragmentDirections.actionLoginFragmentToHomeFragment();
                    //action.setUsername(plantList.get(position));
                    //Navigation.findNavController(view).navigate(action);
+                   Log.d("emilio", "nr 8: size = " + new Integer(plantList.size()).toString());
                    HomeFragmentDirections.ActionHomeFragmentToDetailsPlantFragment action = HomeFragmentDirections.actionHomeFragmentToDetailsPlantFragment(plantList.get(position).getUid());
                    action.setPlantUid(plantList.get(position).getUid());
                    Navigation.findNavController(view).navigate(action);

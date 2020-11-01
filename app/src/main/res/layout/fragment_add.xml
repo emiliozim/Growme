@@ -10,9 +10,10 @@
         android:id="@+id/btnAddPlantToList"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="56dp"
+        android:layout_marginTop="20dp"
         android:text="@string/add_plant_to_list"
         app:layout_constraintEnd_toEndOf="@+id/btnAddPicture"
+        app:layout_constraintHorizontal_bias="0.507"
         app:layout_constraintStart_toStartOf="@+id/btnAddPicture"
         app:layout_constraintTop_toBottomOf="@+id/btnAddPicture" />
 
@@ -46,11 +47,11 @@
         android:id="@+id/addPictureImageView"
         android:layout_width="108dp"
         android:layout_height="126dp"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="20dp"
         app:layout_constraintEnd_toEndOf="@+id/editTextTextPlantDescriptionDetails"
         app:layout_constraintStart_toStartOf="@+id/editTextTextPlantDescriptionDetails"
         app:layout_constraintTop_toBottomOf="@+id/editTextTextPlantDescriptionDetails"
-        tools:src="@tools:sample/avatars" />
+        tools:src="@drawable/imageholder" />
 
     <Button
         android:id="@+id/btnAddPicture"

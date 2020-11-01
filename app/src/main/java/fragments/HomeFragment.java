@@ -9,6 +9,7 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,16 +50,7 @@ public class HomeFragment extends Fragment {
 
     }
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        firebaseDB = FirebaseFirestore.getInstance();
-        plantCollectionReference = firebaseDB.collection("plant");
-        plantList = new ArrayList<>();
-        plantUidList = new ArrayList<>();
 
-
-    }
 
     private void createFireStoreReadListener() {
         /*plantCollectionReference.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -93,6 +85,7 @@ public class HomeFragment extends Fragment {
                     Plant plant = documentSnapshot.toObject(Plant.class);
                     plant.setUid(documentSnapshot.getId());
                     int pos = plantUidList.indexOf(plant.getUid());
+                    Log.d("TAG",plant.getUid() );
 
                     switch (documentChange.getType()) {
                         case ADDED:
@@ -126,12 +119,22 @@ public class HomeFragment extends Fragment {
         }
     }
 
+    @Override
+    public void onStop() {
+        super.onStop();
+        if(listenerRegistration != null){
+            listenerRegistration.remove();
+        }
+    }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-
+        firebaseDB = FirebaseFirestore.getInstance();
+        plantCollectionReference = firebaseDB.collection("plant");
+        plantList = new ArrayList<>();
+        plantUidList = new ArrayList<>();
 
         return inflater.inflate(R.layout.fragment_home, container, false);
     }
@@ -147,11 +150,23 @@ public class HomeFragment extends Fragment {
         HomeFragmentArgs args = HomeFragmentArgs.fromBundle(arguments);
         textView.setText(args.getUsername());
         RecyclerView plantRecyclerView = view.findViewById(R.id.plantRecyclerView);
-        //if(plantRecyclerView == null) {
+
             plantRecyclerAdapter = new PlantRecyclerAdapter(plantRecyclerView.getContext(), plantList);
+            Log.d("emilio", "nr. 1: size = " + new Integer(plantList.size()).toString());
             plantRecyclerView.setAdapter(plantRecyclerAdapter);
+            Log.d("emilio", "nr 2: size = " + new Integer(plantList.size()).toString());
             plantRecyclerView.setLayoutManager(new LinearLayoutManager(plantRecyclerView.getContext()));
-        //}
+            Log.d("emilio", "nr 3: size = " + new Integer(plantList.size()).toString());
+        for (Plant aPlant: plantList){
+            Log.d("TEST", "plantList: " + aPlant.getUid());
+
+        }
+
+        Log.d("TEST", "nr 3: size = " + new Integer(plantList.size()).toString());
+        for (String s: plantUidList){
+            Log.d("TEST","plantUID: " + s);
+        }
     }
+
 
 }

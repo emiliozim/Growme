@@ -47,7 +47,7 @@ public class DetailsPlantFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Bundle arguments =getArguments();
+        Bundle arguments = getArguments();
 
         DetailsPlantFragmentArgs args = DetailsPlantFragmentArgs.fromBundle(arguments);
         String plantUid = args.getPlantUid();
@@ -70,7 +70,9 @@ public class DetailsPlantFragment extends Fragment {
                     if(plant.getImageID() != null && !plant.getImageID().isEmpty()){
                         Glide.with(imageView.getContext()).load(plant.getImageID())
                                 .into(imageView);
-                    }
+                    }else{
+                    imageView.setImageResource(R.drawable.imageholder);
+                }
 
 
                 }else{
