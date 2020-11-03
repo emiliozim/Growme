@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-//import com.bumptech.glide.Glide;
+
 
 import androidx.annotation.NonNull;
 import androidx.navigation.ActionOnlyNavDirections;
@@ -23,7 +24,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.StorageReference;
 
@@ -43,6 +47,7 @@ public class PlantRecyclerAdapter extends RecyclerView.Adapter<PlantRecyclerAdap
     private LayoutInflater inflater;
     private FirebaseFirestore firebaseDB;
     private CollectionReference plantCollectionReference;
+    private  FirebaseUser user;
 
 
     public PlantRecyclerAdapter(Context context, List<Plant> plantList) {
@@ -81,6 +86,7 @@ public class PlantRecyclerAdapter extends RecyclerView.Adapter<PlantRecyclerAdap
         notifyItemRemoved(position);
         notifyItemRangeChanged(position, plantList.size());
 
+        plantCollectionReference.document(HomeFragment.getPlantUidList().get(position)).delete();
 
 
 
@@ -104,7 +110,8 @@ public class PlantRecyclerAdapter extends RecyclerView.Adapter<PlantRecyclerAdap
             super(itemView);
             typeTextView = itemView.findViewById(R.id.plantNameTextView);
             firebaseDB = FirebaseFirestore.getInstance();
-            plantCollectionReference = firebaseDB.collection("plant");
+            user = FirebaseAuth.getInstance().getCurrentUser();
+            plantCollectionReference = firebaseDB.collection(user.getEmail());
             thumbnailImageView = itemView.findViewById(R.id.thumbnailImageView);
             deleteImageView = itemView.findViewById(R.id.deleteImageView);
 
@@ -122,7 +129,11 @@ public class PlantRecyclerAdapter extends RecyclerView.Adapter<PlantRecyclerAdap
                 Glide.with(thumbnailImageView.getContext())
                         .load(plantImage).
                         into(thumbnailImageView);
-            }else{
+            /*}else if(plantToDisplay.getUriImage() != null && !plantToDisplay.equals("") ){
+                Uri uri = Uri.parse(plantToDisplay.getUriImage());
+                thumbnailImageView.setImageURI(uri);
+
+            */}else {
                 thumbnailImageView.setImageResource(R.drawable.imageholder);
             }
 
@@ -139,12 +150,27 @@ public class PlantRecyclerAdapter extends RecyclerView.Adapter<PlantRecyclerAdap
                    builder1.setTitle("Delete");
                    builder1.setMessage(("Are you sure you want to delete " + plant.getType()+ "?"));
                    builder1.setCancelable(true);
-
+                   //DocumentReference currentPlant = firebaseDB.collection(user.getEmail()).add(plant).getResult();
+                   Log.d("db", "s");
+                   firebaseDB.collection(user.getEmail()).document("s").delete()
+                           .addOnSuccessListener(new OnSuccessListener<Void>() {
+                               @Override
+                               public void onSuccess(Void aVoid) {
+                                   Log.d(TAG, "DocumentSnapshot successfully deleted!");
+                               }
+                           })
+                           .addOnFailureListener(new OnFailureListener() {
+                               @Override
+                               public void onFailure(@NonNull Exception e) {
+                                   Log.w(TAG, "Error deleting document", e);
+                               }
+                           });
                   builder1.setPositiveButton(
                            "Yes",
                            new DialogInterface.OnClickListener() {
                                public void onClick(DialogInterface dialog, int id) {
                                    removeItem(position);
+
                                    dialog.cancel();
                                }
                            }).create();
@@ -165,10 +191,7 @@ public class PlantRecyclerAdapter extends RecyclerView.Adapter<PlantRecyclerAdap
                    break;
 
                default:
-                   // HomeFragmentDirections.Action
-                   //LoginFragmentDirections.ActionLoginFragmentToHomeFragment action = LoginFragmentDirections.actionLoginFragmentToHomeFragment();
-                   //action.setUsername(plantList.get(position));
-                   //Navigation.findNavController(view).navigate(action);
+
                    Log.d("emilio", "nr 8: size = " + new Integer(plantList.size()).toString());
                    HomeFragmentDirections.ActionHomeFragmentToDetailsPlantFragment action = HomeFragmentDirections.actionHomeFragmentToDetailsPlantFragment(plantList.get(position).getUid());
                    action.setPlantUid(plantList.get(position).getUid());

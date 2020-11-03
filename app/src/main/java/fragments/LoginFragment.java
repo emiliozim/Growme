@@ -48,6 +48,7 @@ public class LoginFragment extends Fragment {
         objectView = inflater.inflate(R.layout.fragment_login, container, false);
         return objectView;
     }
+
     private void logInUser( ){
         try {
             progressBar.setVisibility(View.VISIBLE);
@@ -58,9 +59,6 @@ public class LoginFragment extends Fragment {
                     progressBar.setVisibility(View.INVISIBLE);
                     btn.setEnabled(true);
                     String username = editUsername.getText().toString() + "'s" + " plant list";
-                   /* Plant.getDescriptions();
-                    Plant.getImages();
-                    Plant.getTypes();*/
                     LoginFragmentDirections.ActionLoginFragmentToHomeFragment action = LoginFragmentDirections.actionLoginFragmentToHomeFragment();
                     action.setUsername(username);
                     Navigation.findNavController(objectView).navigate(action);
@@ -98,6 +96,7 @@ public class LoginFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 logInUser();
+
             }
         });
     }

@@ -3,19 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="fragments.StartFragment"><![CDATA[
-
-    app:navGraph="@navigation/nav_graph" />
-
-
-
-
-
-
-
-
-
-    ]]>
+    tools:context="fragments.StartFragment"
+    app:navGraph="@navigation/nav_graph" >
 
     <ImageButton
         android:id="@+id/imageButtonLogIn"
@@ -26,7 +15,8 @@
         android:layout_marginBottom="85dp"
         android:src="@drawable/ic_baseline_login_24"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        android:contentDescription="@string/log_in_button" />
 
     <ImageButton
         android:id="@+id/imageButtonSignUp"
@@ -37,7 +27,8 @@
         android:layout_marginBottom="85dp"
         android:src="@drawable/ic_baseline_signin_ind_24"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        android:contentDescription="@string/sing_up_button"/>
 
     <TextView
         android:id="@+id/textView"
@@ -56,6 +47,29 @@
         app:layout_constraintEnd_toEndOf="@+id/imageButtonSignUp"
         app:layout_constraintStart_toStartOf="@+id/imageButtonSignUp"
         app:layout_constraintTop_toBottomOf="@+id/imageButtonSignUp" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:src="@drawable/ic_logo_foreground"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="@string/app_logo_growme" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="222dp"
+        android:layout_height="199dp"
+        android:layout_marginTop="32dp"
+        android:text="@string/welcome_to_growme_this_is_a_plant_organiser_app_to_keep_your_plants_happy_an_healthy_log_in_and_get_started_if_you_are_new_here_sign_up_with_one_simple_button_click"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -20,8 +20,8 @@
 
     <EditText
         android:id="@+id/editTextTextPlantDescriptionDetails"
-        android:layout_width="397dp"
-        android:layout_height="304dp"
+        android:layout_width="386dp"
+        android:layout_height="233dp"
         android:layout_marginTop="60dp"
         android:ems="10"
         android:gravity="start|top"
@@ -42,4 +42,31 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:src="@tools:sample/avatars" />
+
+    <Button
+        android:id="@+id/btnDetailsBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="68dp"
+        android:layout_marginRight="68dp"
+        android:text="Back"
+        app:layout_constraintBottom_toBottomOf="@+id/btnDetailsEdit"
+        app:layout_constraintEnd_toStartOf="@+id/btnDetailsEdit"
+        app:layout_constraintTop_toTopOf="@+id/btnDetailsEdit"
+        app:layout_constraintVertical_bias="1.0"
+        android:textColor="@android:color/black"/>
+
+    <Button
+        android:id="@+id/btnDetailsEdit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="60dp"
+        android:layout_marginRight="60dp"
+        android:text="Save Changes"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextTextPlantDescriptionDetails"
+        app:layout_constraintVertical_bias="0.2"
+        android:textColor="@android:color/black"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

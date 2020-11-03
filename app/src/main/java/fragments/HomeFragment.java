@@ -19,6 +19,8 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.EventListener;
@@ -41,37 +43,25 @@ public class HomeFragment extends Fragment {
     private FirebaseFirestore firebaseDB;
     private CollectionReference plantCollectionReference;
     private List<Plant> plantList;
-    private List<String> plantUidList;
+    private static List<String> plantUidList ;
     private PlantRecyclerAdapter plantRecyclerAdapter;
     private ListenerRegistration listenerRegistration;
-
+    private FirebaseUser user;
 
     public HomeFragment() {
 
     }
 
 
+    public static List<String> getPlantUidList() {
+        return plantUidList;
+    }
+
+    public static void setPlantUidList(List<String> plantUidList) {
+        HomeFragment.plantUidList = plantUidList;
+    }
 
     private void createFireStoreReadListener() {
-        /*plantCollectionReference.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()){
-                    for (QueryDocumentSnapshot documentSnapshots : task.getResult()){
-                        Plant plant = documentSnapshots.toObject(Plant.class);
-                        plant.setUid(documentSnapshots.getId());
-                        plantList.add(plant);
-                        plantUidList.add(plant.getUid());
-
-
-                    }
-                    plantRecyclerAdapter.notifyDataSetChanged();
-
-                }else{
-                    Toast.makeText(getContext(), "hmm", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });*/
 
         listenerRegistration = plantCollectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
@@ -109,13 +99,16 @@ public class HomeFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        Log.d("db", "onResume");
         createFireStoreReadListener();
     }
     @Override
     public void onPause() {
         super.onPause();
+        Log.d("db", "onPause");
         if(listenerRegistration != null){
             listenerRegistration.remove();
+            Log.d("db", "remove");
         }
     }
 
@@ -132,9 +125,8 @@ public class HomeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         firebaseDB = FirebaseFirestore.getInstance();
-        plantCollectionReference = firebaseDB.collection("plant");
-        plantList = new ArrayList<>();
-        plantUidList = new ArrayList<>();
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        plantCollectionReference = firebaseDB.collection(user.getEmail());
 
         return inflater.inflate(R.layout.fragment_home, container, false);
     }
@@ -143,7 +135,17 @@ public class HomeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Button btn = view.findViewById(R.id.btnAddPlant);
+        plantUidList =  new ArrayList<>();
+        plantList = new ArrayList<>();
         btn.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_homeFragment_to_addFragment));
+       /*btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                for (String string : plantUidList) {
+                    Log.d("db", string);
+                }
+            }
+        });*/
         Bundle arguments = getArguments();
 
         TextView textView = view.findViewById(R.id.textViewUsername);
@@ -152,20 +154,11 @@ public class HomeFragment extends Fragment {
         RecyclerView plantRecyclerView = view.findViewById(R.id.plantRecyclerView);
 
             plantRecyclerAdapter = new PlantRecyclerAdapter(plantRecyclerView.getContext(), plantList);
-            Log.d("emilio", "nr. 1: size = " + new Integer(plantList.size()).toString());
+
             plantRecyclerView.setAdapter(plantRecyclerAdapter);
-            Log.d("emilio", "nr 2: size = " + new Integer(plantList.size()).toString());
+
             plantRecyclerView.setLayoutManager(new LinearLayoutManager(plantRecyclerView.getContext()));
-            Log.d("emilio", "nr 3: size = " + new Integer(plantList.size()).toString());
-        for (Plant aPlant: plantList){
-            Log.d("TEST", "plantList: " + aPlant.getUid());
 
-        }
-
-        Log.d("TEST", "nr 3: size = " + new Integer(plantList.size()).toString());
-        for (String s: plantUidList){
-            Log.d("TEST","plantUID: " + s);
-        }
     }
 
 

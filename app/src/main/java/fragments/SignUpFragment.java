@@ -7,6 +7,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,18 +20,26 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.ArrayList;
 
 import ezim.growme.R;
+import model.Plant;
 
 public class SignUpFragment extends Fragment {
 
 
     private EditText username, password, rePassword;
     private FirebaseAuth firebaseAuth;
+    private FirebaseUser user;
     private Button btnSignUp;
     private ProgressBar progressBar;
     private View objectView;
-
+    private FirebaseFirestore firebaseDB;
+    private CollectionReference plantCollectionReference;
 
     public SignUpFragment() {
         // Required empty public constructor
@@ -52,7 +61,6 @@ public class SignUpFragment extends Fragment {
 
                            if (firebaseAuth.getCurrentUser() != null) {
                                firebaseAuth.signOut();
-
                            }
                        }
                    }).addOnFailureListener(new OnFailureListener() {
@@ -74,6 +82,13 @@ public class SignUpFragment extends Fragment {
             progressBar.setVisibility(View.INVISIBLE);
             btnSignUp.setEnabled(true);
         }
+    }
+    public void createUserDatabase(){
+        firebaseDB = FirebaseFirestore.getInstance();
+        plantCollectionReference = firebaseDB.collection(user.getEmail());
+        plantCollectionReference.add(new Plant());
+        Log.d("db", "db done!");
+        //generateTestData();
     }
 
     @Override
@@ -98,13 +113,25 @@ public class SignUpFragment extends Fragment {
         btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-
                 createUser(username, password ,rePassword);
-
             }
         });
-        ;
+
 
     }
+    public void generateTestData() {
+        firebaseDB = FirebaseFirestore.getInstance();
+        plantCollectionReference = firebaseDB.collection("plant");
+        ArrayList<Plant> plants = new ArrayList<>();
+        plants.add(new Plant("Basil", "Requires high amount sun light, minimum degrees 14 celsius"));
+        plants.add(new Plant("Thyme", "Requires high amount sun light, minimum degrees 14 celsius"));
+        plants.add(new Plant("Oregano", "Requires high amount sun light, minimum degrees 14 celsius"));
+        plants.add(new Plant("Tomatillo", "Requires high amount sun light, minimum degrees 14 celsius"));
+
+        for (Plant plant : plants) {
+            plantCollectionReference.add(plant);
+        }
+    }
+
+
 }

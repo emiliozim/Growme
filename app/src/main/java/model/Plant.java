@@ -2,6 +2,8 @@ package model;
 
 
 
+import android.net.Uri;
+
 import com.google.firebase.storage.FirebaseStorage;
 
 import java.util.ArrayList;
@@ -12,24 +14,29 @@ import ezim.growme.R;
 public class Plant {
 
     private String type, description, uid, imageID;
-    public static ArrayList<String>  descriptionList = new ArrayList<String>();
-    public static ArrayList<String>  typeList = new ArrayList<String>();
-    public static ArrayList<String>  imageList = new ArrayList<>();
-    public  List<Plant> plantList = new ArrayList<>();
-
+    private String uriImage;
     public Plant(){
 
     }
 
-    public Plant(String imageID, String type, String description){
+    public Plant(String imageID, String type, String description, String uid, String uriImage){
         this.imageID = imageID;
+        this.type = type;
+        this.description = description;
+        this.uid = uid;
+        this.uriImage =uriImage;
+    }
+    public Plant(String type, String description){
         this.type = type;
         this.description = description;
     }
-    public Plant(String type, String description){
-        this.imageID = imageID;
-        this.type = type;
-        this.description = description;
+
+    public String getUriImage() {
+        return uriImage;
+    }
+
+    public void setUriImage(String uriImage) {
+        this.uriImage = uriImage;
     }
 
     public String getImageID() {
@@ -63,63 +70,6 @@ public class Plant {
     public void setDescription(String description) {
         this.description = description;
     }
-
-    public static ArrayList<Plant> getData(){
-        ArrayList<Plant> plantList = new ArrayList<>();
-
-        ArrayList<String> images = imageList;
-        ArrayList<String> types = typeList;
-        ArrayList<String> descriptions = descriptionList;
-
-
-        for(int i = 0; i < images.size(); i++){
-
-            Plant plant = new Plant(images.get(i), types.get(i), descriptions.get(i));
-            plantList.add(plant);
-        }
-        return plantList;
-    }
-
-   /* public static ArrayList<Integer> getImages(){
-        imageList.add(R.drawable.basilicum);
-        imageList.add(R.drawable.thyme);
-        imageList.add(R.drawable.oregano);
-        imageList.add(R.drawable.tomatillo);
-
-        return  imageList;
-    }/*
-    public static ArrayList<String> getTypes(){
-
-        typeList.add("Basil");
-        typeList.add("Thyme");
-        typeList.add("Oregano");
-        typeList.add("Tomatillo");
-        return typeList;
-    }
-    public static ArrayList<String> getDescriptions(){
-
-
-        descriptionList.add("Requires high amount sun light, minimum degrees 14 celsius");
-        descriptionList.add("Requires medium amount of sun light, minimum degrees 2 celsius");
-        descriptionList.add("Requires medium amount of sun light, minimum degrees 2 celsius");
-        descriptionList.add("Requires medium amount of sun light, minimum degrees 2 celsius");
-        return descriptionList;
-
-    }
-    public static  ArrayList<String> addDescription(String description){
-        descriptionList.add(description);
-        return  descriptionList;
-    }
-    public static ArrayList<String> addTypes(String string){
-
-        typeList.add(string);
-        return typeList;
-    }
-   /* public static ArrayList<Integer> addImages(String n){
-        imageList.add(n);
-
-        return  imageList;
-    }*/
 
 
 }

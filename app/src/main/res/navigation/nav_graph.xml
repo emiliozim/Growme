@@ -66,5 +66,8 @@
         <argument
             android:name="plantUid"
             app:argType="string" />
+        <action
+            android:id="@+id/action_detailsPlantFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
     </fragment>
 </navigation>

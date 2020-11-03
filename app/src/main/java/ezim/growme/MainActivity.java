@@ -42,9 +42,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Log.d("emilio","start");
         setContentView(R.layout.activity_main);
-        firebaseDB = FirebaseFirestore.getInstance();
 
-        plantCollectionReference = firebaseDB.collection("plant");
 
         //generateTestData();
 
@@ -52,18 +50,18 @@ public class MainActivity extends AppCompatActivity {
 
     }
     public void generateTestData(){
-
+        firebaseDB = FirebaseFirestore.getInstance();
+        plantCollectionReference = firebaseDB.collection("plant");
         ArrayList<Plant> plants = new ArrayList<>();
         plants.add(new Plant ("Basil", "Requires high amount sun light, minimum degrees 14 celsius"));
         plants.add(new Plant ( "Thyme", "Requires high amount sun light, minimum degrees 14 celsius"));
         plants.add(new Plant ( "Oregano", "Requires high amount sun light, minimum degrees 14 celsius"));
         plants.add(new Plant ( "Tomatillo", "Requires high amount sun light, minimum degrees 14 celsius"));
+
         for (Plant plant: plants){
             plantCollectionReference.add(plant);
         }
 
     }
-
-
 
 }
