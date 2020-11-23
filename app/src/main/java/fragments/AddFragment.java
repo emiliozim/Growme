@@ -113,29 +113,20 @@ public class AddFragment extends Fragment {
         buttonAddPlantToList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                editPlantDescription = getView().findViewById(R.id.editTextTextPlantDescriptionDetails);
-                editPlantType = getView().findViewById(R.id.editTextTextPlantNameDetails);
-                plantType = editPlantType.getText().toString();
-                plantDescription = editPlantDescription.getText().toString();
-                plant.setType(plantType);
-                plant.setDescription(plantDescription);
-
+                
                 if(imageUri != null) {
-                    //plant.setUriImage(imageUri.toString());
+                    editPlantDescription = getView().findViewById(R.id.editTextTextPlantDescriptionDetails);
+                    editPlantType = getView().findViewById(R.id.editTextTextPlantNameDetails);
+                    plantType = editPlantType.getText().toString();
+                    plantDescription = editPlantDescription.getText().toString();
+                    plant.setType(plantType);
+                    plant.setDescription(plantDescription);
+                    uploadFile();
+                    AddFragmentDirections.ActionAddFragmentToHomeFragment action = AddFragmentDirections.actionAddFragmentToHomeFragment();
+                    Navigation.findNavController(view).navigate(action);
+                }else{
+                    Toast.makeText(getContext(), "Need to add a image!", Toast.LENGTH_SHORT).show();
                 }
-                uploadFile();
-
-                //plantCollectionReference.add(plant);
-
-                for (Uri uris : uriList){
-                    Log.d("gg","Download Uri " +uris.toString());
-                }
-
-
-
-
-                AddFragmentDirections.ActionAddFragmentToHomeFragment action = AddFragmentDirections.actionAddFragmentToHomeFragment();
-                Navigation.findNavController(view).navigate(action);
             }
         });
 
@@ -153,7 +144,7 @@ public class AddFragment extends Fragment {
                 String arr[] = taskSnapshot.getUploadSessionUri().toString().split("plants%2F", 2);
                 String arr2[] = arr[1].split("&", 2);
                 savedImageName = arr2[0];
-
+                downloadFile();
 
             }
         }).addOnFailureListener(new OnFailureListener() {
@@ -208,7 +199,7 @@ public class AddFragment extends Fragment {
         if(resultCode == RESULT_OK && requestCode == 1 && data != null && data.getData() != null){
             imageUri = data.getData();
             imageView.setImageURI(imageUri);
-            
+
 
         }
     }
