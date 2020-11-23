@@ -1,6 +1,8 @@
 package fragments;
 
+import android.content.ActivityNotFoundException;
 import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
 
 import android.graphics.Bitmap;
@@ -60,7 +62,9 @@ import static android.app.Activity.RESULT_OK;
 public class AddFragment extends Fragment {
 
 
-    private static final int PICK_IMAGE = 100;
+    private static final int REQUEST_IMAGE_GALLERY = 1;
+    private static final int REQUEST_IMAGE_CAPTURE = 1;
+    String currentPhotoPath;
     Uri imageUri;
     public String savedImageName;
     private String downloadUri;
@@ -106,14 +110,14 @@ public class AddFragment extends Fragment {
         buttonAddPicture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openGallery();
+                dispatchTakePictureIntent();
 
             }
         });
         buttonAddPlantToList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                
+
                 if(imageUri != null) {
                     editPlantDescription = getView().findViewById(R.id.editTextTextPlantDescriptionDetails);
                     editPlantType = getView().findViewById(R.id.editTextTextPlantNameDetails);
@@ -187,6 +191,7 @@ public class AddFragment extends Fragment {
         return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri));
 
     }
+    // add image for gallery
     private void openGallery(){
         Intent gallery = new Intent();
         gallery.setType("image/");
@@ -196,13 +201,35 @@ public class AddFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data){
         super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode == RESULT_OK && requestCode == 1 && data != null && data.getData() != null){
+        if(resultCode == RESULT_OK && requestCode == REQUEST_IMAGE_GALLERY && data != null && data.getData() != null){
             imageUri = data.getData();
             imageView.setImageURI(imageUri);
-
-
+        }
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            imageUri = getImageUri(getContext(), imageBitmap);
+            Log.d("gg", " CAMERA " + imageBitmap);
+            Log.d("gg", " CAMERA URI " + imageBitmap);
+            imageView.setImageBitmap(imageBitmap);
         }
     }
+    // add image form camera
+    private void dispatchTakePictureIntent() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        try {
+            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+        } catch (ActivityNotFoundException e) {
+            // display error state to the user
+        }
+    }
+    public Uri getImageUri(Context inContext, Bitmap inImage) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
+        return Uri.parse(path);
+    }
+
 
 
 
