@@ -108,6 +108,8 @@ public class AddFragment extends Fragment {
          user = FirebaseAuth.getInstance().getCurrentUser();
          plantCollectionReference = firebaseDB.collection(user.getEmail());
 
+         
+
         btnAddPictureFromCamera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -151,7 +153,6 @@ public class AddFragment extends Fragment {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                 Toast.makeText(getContext(), "done", Toast.LENGTH_SHORT).show();
-                taskSnapshot.getUploadSessionUri().toString();
                 String arr[] = taskSnapshot.getUploadSessionUri().toString().split("plants%2F", 2);
                 String arr2[] = arr[1].split("&", 2);
                 savedImageName = arr2[0];
@@ -222,7 +223,7 @@ public class AddFragment extends Fragment {
         try {
             startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
         } catch (ActivityNotFoundException e) {
-            // display error state to the user
+            Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
     public Uri getImageUri(Context inContext, Bitmap inImage) {
@@ -231,8 +232,4 @@ public class AddFragment extends Fragment {
         String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
         return Uri.parse(path);
     }
-
-
-
-
 }
