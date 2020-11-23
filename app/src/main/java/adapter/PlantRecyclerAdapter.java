@@ -182,9 +182,6 @@ public class PlantRecyclerAdapter extends RecyclerView.Adapter<PlantRecyclerAdap
                                    dialog.cancel();
                                }
                            }).create();
-
-
-
                   AlertDialog alert11 = builder1.create();
                   alert11.show();
 

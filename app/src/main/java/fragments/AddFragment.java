@@ -68,8 +68,8 @@ public class AddFragment extends Fragment {
     Uri imageUri;
     public String savedImageName;
     private String downloadUri;
-    ImageView imageView;
-    Button buttonAddPicture, buttonAddPlantToList;
+    ImageView imageView, btnAddPictureFromCamera, btnAddPictureFromGallery;
+    Button buttonAddPlantToList;
     private FirebaseFirestore firebaseDB;
     private FirebaseUser user;
     private CollectionReference plantCollectionReference;
@@ -97,7 +97,8 @@ public class AddFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
          imageView = view.findViewById(R.id.addPictureImageView);
-         buttonAddPicture =  view.findViewById(R.id.btnAddPicture);
+         btnAddPictureFromCamera =  view.findViewById(R.id.btnAddPictureFromCamera);
+         btnAddPictureFromGallery =  view.findViewById(R.id.btnAddPictureFromGallery);
          buttonAddPlantToList = view.findViewById(R.id.btnAddPlantToList);
          storageRef = FirebaseStorage.getInstance().getReference("plants");
 
@@ -107,11 +108,16 @@ public class AddFragment extends Fragment {
          user = FirebaseAuth.getInstance().getCurrentUser();
          plantCollectionReference = firebaseDB.collection(user.getEmail());
 
-        buttonAddPicture.setOnClickListener(new View.OnClickListener() {
+        btnAddPictureFromCamera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 dispatchTakePictureIntent();
-
+            }
+        });
+        btnAddPictureFromGallery.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openGallery();
             }
         });
         buttonAddPlantToList.setOnClickListener(new View.OnClickListener() {
@@ -125,6 +131,7 @@ public class AddFragment extends Fragment {
                     plantDescription = editPlantDescription.getText().toString();
                     plant.setType(plantType);
                     plant.setDescription(plantDescription);
+
                     uploadFile();
                     AddFragmentDirections.ActionAddFragmentToHomeFragment action = AddFragmentDirections.actionAddFragmentToHomeFragment();
                     Navigation.findNavController(view).navigate(action);
@@ -177,12 +184,7 @@ public class AddFragment extends Fragment {
         });
 
     }
-    public void saveUri (Uri uri){
-        uriList.add(uri);
-        plant.setUriImage(uri.toString());
-        plantCollectionReference.add(plant);
-        Log.d("gg","Download Uri  SAVEURI" + uri.toString());
-    }
+
 
     private String getFileExtension(Uri uri){
         ContentResolver contentResolver = getContext().getContentResolver();
@@ -205,7 +207,7 @@ public class AddFragment extends Fragment {
             imageUri = data.getData();
             imageView.setImageURI(imageUri);
         }
-        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+        else if(requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
             imageUri = getImageUri(getContext(), imageBitmap);

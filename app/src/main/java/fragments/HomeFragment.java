@@ -14,6 +14,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -134,7 +136,7 @@ public class HomeFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Button btn = view.findViewById(R.id.btnAddPlant);
+        ImageView btn = view.findViewById(R.id.btnAddPlant);
         plantUidList =  new ArrayList<>();
         plantList = new ArrayList<>();
         btn.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_homeFragment_to_addFragment));
