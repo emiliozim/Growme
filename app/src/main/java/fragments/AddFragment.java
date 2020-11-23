@@ -48,6 +48,7 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import ezim.growme.R;
@@ -61,6 +62,7 @@ public class AddFragment extends Fragment {
 
     private static final int PICK_IMAGE = 100;
     Uri imageUri;
+    public String savedImageName;
     private String downloadUri;
     ImageView imageView;
     Button buttonAddPicture, buttonAddPlantToList;
@@ -70,6 +72,7 @@ public class AddFragment extends Fragment {
     private List<String> plantUidList;
     private ListenerRegistration listenerRegistration;
     private List<Plant> plantList;
+    public List<Uri> uriList = new ArrayList<>();
     private Plant plant;
     private String plantType, plantDescription;
     private  DocumentReference documentReference;
@@ -116,12 +119,17 @@ public class AddFragment extends Fragment {
                 plantDescription = editPlantDescription.getText().toString();
                 plant.setType(plantType);
                 plant.setDescription(plantDescription);
+
                 if(imageUri != null) {
-                    plant.setUriImage(imageUri.toString());
+                    //plant.setUriImage(imageUri.toString());
                 }
-                //uploadFile();
-                //downloadFile();
-                plantCollectionReference.add(plant);
+                uploadFile();
+
+                //plantCollectionReference.add(plant);
+
+                for (Uri uris : uriList){
+                    Log.d("gg","Download Uri " +uris.toString());
+                }
 
 
 
@@ -141,6 +149,11 @@ public class AddFragment extends Fragment {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                 Toast.makeText(getContext(), "done", Toast.LENGTH_SHORT).show();
+                taskSnapshot.getUploadSessionUri().toString();
+                String arr[] = taskSnapshot.getUploadSessionUri().toString().split("plants%2F", 2);
+                String arr2[] = arr[1].split("&", 2);
+                savedImageName = arr2[0];
+
 
             }
         }).addOnFailureListener(new OnFailureListener() {
@@ -151,23 +164,35 @@ public class AddFragment extends Fragment {
         });
 
     }
-    private void downloadFile(){
-          storageRef.child("thyme.png").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+    public void downloadFile(){
+          Log.d("gg","1606142642536.png");
+        Log.d("gg",savedImageName);
+          storageRef.child(savedImageName).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
                 plant.setImageID(uri.toString());
+                plantCollectionReference.add(plant);
 
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception exception) {
-                // Handle any errors
+                Toast.makeText(getContext(), "Fail to load image, please try again", Toast.LENGTH_SHORT).show();
             }
         });
+
     }
+    public void saveUri (Uri uri){
+        uriList.add(uri);
+        plant.setUriImage(uri.toString());
+        plantCollectionReference.add(plant);
+        Log.d("gg","Download Uri  SAVEURI" + uri.toString());
+    }
+
     private String getFileExtension(Uri uri){
         ContentResolver contentResolver = getContext().getContentResolver();
         MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
+
         return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri));
 
     }
@@ -183,8 +208,7 @@ public class AddFragment extends Fragment {
         if(resultCode == RESULT_OK && requestCode == 1 && data != null && data.getData() != null){
             imageUri = data.getData();
             imageView.setImageURI(imageUri);
-
-           //plant.setUriImage(imageUri);
+            
 
         }
     }
