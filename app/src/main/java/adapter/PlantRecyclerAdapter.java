@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -114,7 +115,7 @@ public class PlantRecyclerAdapter extends RecyclerView.Adapter<PlantRecyclerAdap
             plantCollectionReference = firebaseDB.collection(user.getEmail());
             thumbnailImageView = itemView.findViewById(R.id.thumbnailImageView);
             deleteImageView = itemView.findViewById(R.id.deleteImageView);
-
+            thumbnailImageView.setBackgroundColor(Color.argb(75, 75, 75, 75));
             itemView.setOnClickListener(this);
             deleteImageView.setOnClickListener(this);
             Log.d("emilio", "nr 7: size = " + new Integer(plantList.size()).toString());

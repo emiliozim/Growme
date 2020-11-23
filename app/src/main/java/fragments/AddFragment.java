@@ -97,6 +97,7 @@ public class AddFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
          imageView = view.findViewById(R.id.addPictureImageView);
+         imageView.setImageResource(R.drawable.imageholder);
          btnAddPictureFromCamera =  view.findViewById(R.id.btnAddPictureFromCamera);
          btnAddPictureFromGallery =  view.findViewById(R.id.btnAddPictureFromGallery);
          buttonAddPlantToList = view.findViewById(R.id.btnAddPlantToList);
@@ -108,7 +109,7 @@ public class AddFragment extends Fragment {
          user = FirebaseAuth.getInstance().getCurrentUser();
          plantCollectionReference = firebaseDB.collection(user.getEmail());
 
-         
+
 
         btnAddPictureFromCamera.setOnClickListener(new View.OnClickListener() {
             @Override
