@@ -89,6 +89,7 @@ public class HomeFragment extends Fragment {
                             plantList.remove(plant);
                             plantUidList.remove(plant.getUid());
                             plantRecyclerAdapter.notifyItemRemoved(pos);
+                            plantRecyclerAdapter.notifyItemRangeChanged(pos, plantList.size());
                             break;
                         case MODIFIED:
                            plantList.set(pos, plant);

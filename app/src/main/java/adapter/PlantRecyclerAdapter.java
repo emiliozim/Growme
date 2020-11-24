@@ -85,7 +85,7 @@ public class PlantRecyclerAdapter extends RecyclerView.Adapter<PlantRecyclerAdap
     private void removeItem(int position){
         plantList.remove(position);
         notifyItemRemoved(position);
-        notifyItemRangeChanged(position, plantList.size());
+        //notifyItemRangeChanged(position, plantList.size());
 
         plantCollectionReference.document(HomeFragment.getPlantUidList().get(position)).delete();
 
