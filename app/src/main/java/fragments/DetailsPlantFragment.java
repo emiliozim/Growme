@@ -14,6 +14,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -34,7 +36,9 @@ import model.Plant;
 public class DetailsPlantFragment extends Fragment {
 
     private ImageView imageView;
-    private EditText name, description;
+    private EditText name, description, editTextWater, editTextSun, editTextFertilizer;
+    private ProgressBar progressBarWater, progressBarSun, progressBarFertilizer;
+    private Plant plant;
     private DocumentReference documentReference;
 
 
@@ -63,8 +67,14 @@ public class DetailsPlantFragment extends Fragment {
         imageView = view.findViewById(R.id.imageViewDetails);
         name = view.findViewById(R.id.editTextTextPlantNameDetails);
         description = view.findViewById(R.id.editTextTextPlantDescriptionDetails);
-        Button btnBack = view.findViewById(R.id.btnDetailsBack);
-        Button btnEdit = view.findViewById(R.id.btnDetailsEdit);
+        progressBarWater = view.findViewById(R.id.progressBarWater);
+        progressBarSun = view.findViewById(R.id.progressBarSun);
+        progressBarFertilizer = view.findViewById(R.id.progressBarFertilizer);
+        editTextWater = view.findViewById(R.id.editTextWater);
+        editTextSun = view.findViewById(R.id.editTextSun);
+        editTextFertilizer = view.findViewById(R.id.editTextFertilizer);
+        ImageView btnBack = view.findViewById(R.id.btnDetailsBack);
+        ImageView btnEdit = view.findViewById(R.id.btnDetailsEdit);
 
         FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -81,26 +91,39 @@ public class DetailsPlantFragment extends Fragment {
         btnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               // documentReference.update("type", "s","s");
+                // documentReference.update("type", "s","s");
                 documentReference.update("type", name.getText().toString());
                 documentReference.update("description", description.getText().toString());
+                documentReference.update("water", Integer.parseInt(editTextWater.getText().toString()));
+
+                documentReference.update("sunlight", Integer.parseInt(String.valueOf(plant.getLocationArray().indexOf(editTextSun.getText().toString()))));
+                documentReference.update("fertilizer",  Integer.parseInt(editTextFertilizer.getText().toString()));
                 Toast.makeText(getContext(), "Plant Updated", Toast.LENGTH_SHORT).show();
             }
         });
 
-
-
-
         documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if(task.isSuccessful()){
                     DocumentSnapshot documentSnapshot = task.getResult();
-                    Plant plant = documentSnapshot.toObject(Plant.class);
+                    plant = documentSnapshot.toObject(Plant.class);
                     plant.setUid(documentSnapshot.getId());
                     name.setText(plant.getType());
+
                     description.setText(plant.getDescription());
+                    double waterCalc = plant.getWater() * 14.3;
+                    progressBarWater.setProgress((int)waterCalc);
+                    double sunCalc = plant.getSunlight() * 12.5;
+                    progressBarSun.setProgress((int)sunCalc);
+                    double fertilizerCalc = plant.getFertilizer() * 12.5;
+                    progressBarFertilizer.setProgress((int)fertilizerCalc);
+
+                    editTextWater.setText(Integer.toString(plant.getWater()));
+
+                    editTextSun.setText(plant.getLocationArray().get(plant.getSunlight()));
+                    editTextFertilizer.setText(Integer.toString(plant.getFertilizer()));
+
 
                     if(plant.getImageID() != null && !plant.getImageID().isEmpty()){
                         Glide.with(imageView.getContext()).load(plant.getImageID())

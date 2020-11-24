@@ -10,63 +10,206 @@
         android:id="@+id/editTextTextPlantNameDetails"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="80dp"
         android:ems="10"
         android:hint="@string/plant_name"
         android:inputType="textPersonName"
-        app:layout_constraintBottom_toBottomOf="@+id/imageViewDetails"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/imageViewDetails"
-        app:layout_constraintTop_toTopOf="@+id/imageViewDetails" />
+        app:layout_constraintHorizontal_bias="0.014"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/editTextTextPlantDescriptionDetails"
-        android:layout_width="386dp"
-        android:layout_height="233dp"
-        android:layout_marginTop="60dp"
+        android:layout_width="402dp"
+        android:layout_height="190dp"
+        android:layout_marginTop="44dp"
         android:ems="10"
         android:gravity="start|top"
         android:hint="@string/description"
         android:inputType="textMultiLine"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.444"
+        app:layout_constraintHorizontal_bias="0.333"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageViewDetails" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextTextPlantNameDetails" />
 
     <ImageView
         android:id="@+id/imageViewDetails"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:layout_marginStart="4dp"
-        android:layout_marginLeft="4dp"
+        android:layout_width="174dp"
+        android:layout_height="92dp"
         android:layout_marginTop="80dp"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginEnd="4dp"
+        android:layout_marginRight="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/editTextTextPlantNameDetails"
         app:layout_constraintTop_toTopOf="parent"
         tools:src="@tools:sample/avatars" />
 
-    <Button
-        android:id="@+id/btnDetailsBack"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="68dp"
-        android:layout_marginRight="68dp"
-        android:text="Back"
-        app:layout_constraintBottom_toBottomOf="@+id/btnDetailsEdit"
-        app:layout_constraintEnd_toStartOf="@+id/btnDetailsEdit"
-        app:layout_constraintTop_toTopOf="@+id/btnDetailsEdit"
-        app:layout_constraintVertical_bias="1.0"
-        android:textColor="@android:color/black"/>
 
-    <Button
+    <ProgressBar
+        android:id="@+id/progressBarWater"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="130dp"
+        android:layout_height="15dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginBottom="20dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView4"
+        app:layout_constraintStart_toEndOf="@+id/imageView4" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/btnDetailsEdit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="60dp"
-        android:layout_marginRight="60dp"
-        android:text="Save Changes"
+        android:layout_marginEnd="100dp"
+        android:layout_marginRight="100dp"
+        android:layout_marginBottom="80dp"
+        android:clickable="true"
+        android:src="@drawable/save_button"
+        app:backgroundTint="@color/primaryColor"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btnDetailsBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="80dp"
+        android:layout_marginLeft="80dp"
+        android:layout_marginBottom="80dp"
+        android:clickable="true"
+        android:src="@drawable/back_button"
+        app:backgroundTint="@color/primaryColor"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="65dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="20dp"
+        android:src="@mipmap/water_icon"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPlantDescriptionDetails"
-        app:layout_constraintVertical_bias="0.2"
-        android:textColor="@android:color/black"/>
+        app:layout_constraintHorizontal_bias="0.043"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextTextPlantDescriptionDetails" />
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="65dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="8dp"
+        android:src="@mipmap/sun_icon"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.043"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView4" />
+
+    <ImageView
+        android:id="@+id/imageView6"
+        android:layout_width="65dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="8dp"
+        android:src="@mipmap/fertilizer_icon"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.043"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView5" />
+
+    <ProgressBar
+        android:id="@+id/progressBarSun"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="130dp"
+        android:layout_height="15dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginBottom="20dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView5"
+        app:layout_constraintStart_toEndOf="@+id/imageView5" />
+
+    <ProgressBar
+        android:id="@+id/progressBarFertilizer"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="130dp"
+        android:layout_height="15dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginBottom="20dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView6"
+        app:layout_constraintStart_toEndOf="@+id/imageView6" />
+
+    <TextView
+        android:id="@+id/textViewWater"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:text="Water per week"
+        app:layout_constraintBottom_toBottomOf="@+id/progressBarWater"
+        app:layout_constraintStart_toEndOf="@+id/progressBarWater"
+        app:layout_constraintTop_toTopOf="@+id/progressBarWater" />
+
+    <TextView
+        android:id="@+id/textViewSun"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:text="Plant location"
+        app:layout_constraintBottom_toBottomOf="@+id/progressBarSun"
+        app:layout_constraintStart_toEndOf="@+id/progressBarSun" />
+
+    <TextView
+        android:id="@+id/textViewFertilizer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:text="Fertilizer per month"
+        app:layout_constraintBottom_toBottomOf="@+id/progressBarFertilizer"
+        app:layout_constraintStart_toEndOf="@+id/progressBarFertilizer"
+        app:layout_constraintTop_toTopOf="@+id/progressBarFertilizer"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <EditText
+        android:id="@+id/editTextWater"
+        android:layout_width="32dp"
+        android:layout_height="39dp"
+        android:layout_marginStart="2dp"
+        android:layout_marginLeft="2dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="10"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewWater"
+        app:layout_constraintStart_toEndOf="@+id/textViewWater"
+        app:layout_constraintTop_toTopOf="@+id/textViewWater" />
+
+    <EditText
+        android:id="@+id/editTextFertilizer"
+        android:layout_width="32dp"
+        android:layout_height="39dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="30"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewFertilizer"
+        app:layout_constraintStart_toEndOf="@+id/textViewFertilizer"
+        app:layout_constraintTop_toTopOf="@+id/textViewFertilizer" />
+
+    <EditText
+        android:id="@+id/editTextSun"
+        android:layout_width="40dp"
+        android:layout_height="39dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginLeft="4dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="10"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewSun"
+        app:layout_constraintStart_toEndOf="@+id/textViewSun"
+        app:layout_constraintTop_toTopOf="@+id/textViewSun"
+        app:layout_constraintVertical_bias="0.55" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

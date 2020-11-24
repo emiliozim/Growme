@@ -79,8 +79,9 @@ public class AddFragment extends Fragment {
     public List<Uri> uriList = new ArrayList<>();
     private Plant plant;
     private String plantType, plantDescription;
+    private int plantWater, plantSunlight, plantFertilizer;
     private  DocumentReference documentReference;
-    private  EditText editPlantDescription, editPlantType;
+    private  EditText editPlantDescription, editPlantType, editPlantWater, editPlantSunlight, editPlantFertilizer;
     StorageReference storageRef;
     FirebaseStorage storage;
 
@@ -130,10 +131,20 @@ public class AddFragment extends Fragment {
                 if(imageUri != null) {
                     editPlantDescription = getView().findViewById(R.id.editTextTextPlantDescriptionDetails);
                     editPlantType = getView().findViewById(R.id.editTextTextPlantNameDetails);
+                    editPlantWater = getView().findViewById(R.id.editTextEditWater);
+                    editPlantSunlight = getView().findViewById(R.id.editTextEditSun);
+                    editPlantFertilizer = getView().findViewById(R.id.editTextEditFertilizer);
                     plantType = editPlantType.getText().toString();
                     plantDescription = editPlantDescription.getText().toString();
+                    plantWater = Integer.parseInt(editPlantWater.getText().toString());
+                    plantSunlight = Integer.parseInt(editPlantSunlight.getText().toString());
+                    plantFertilizer = Integer.parseInt(editPlantFertilizer.getText().toString());
                     plant.setType(plantType);
                     plant.setDescription(plantDescription);
+                    plant.setWater(plantWater);
+                    plant.setSunlight(plantSunlight);
+                    plant.setFertilizer(plantFertilizer);
+
 
                     uploadFile();
                     AddFragmentDirections.ActionAddFragmentToHomeFragment action = AddFragmentDirections.actionAddFragmentToHomeFragment();
