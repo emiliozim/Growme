@@ -47,8 +47,8 @@
 
     <ImageView
         android:id="@+id/addPictureImageView"
-        android:layout_width="108dp"
-        android:layout_height="126dp"
+        android:layout_width="150dp"
+        android:layout_height="100dp"
         android:layout_marginTop="20dp"
         app:layout_constraintEnd_toEndOf="@+id/editTextTextPlantDescriptionDetails"
         app:layout_constraintStart_toStartOf="@+id/editTextTextPlantDescriptionDetails"

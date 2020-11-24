@@ -2,14 +2,9 @@ package model;
 
 
 
-import android.net.Uri;
-
-import com.google.firebase.storage.FirebaseStorage;
-
 import java.util.ArrayList;
 import java.util.List;
 
-import ezim.growme.R;
 
 public class Plant {
 
@@ -17,7 +12,7 @@ public class Plant {
     private int water, sunlight, fertilizer;
     private String uriImage;
     private List<String> locationArray = new ArrayList();
-   // private List locationArray = {"north", "NE", "NW", "east", "west", "SE", "SW", "south"};
+
 
     public Plant(){
     }
@@ -111,6 +106,7 @@ public class Plant {
 
     public List<String> getLocationArray() {
         if(locationArray != null){
+
             locationArray.add("north");
             locationArray.add("NE");
             locationArray.add("NW");
@@ -123,37 +119,4 @@ public class Plant {
         return locationArray;
     }
 
-    public String locationCalculator(int n) {
-        String location = "";
-
-        switch (n) {
-            case 1:
-            case 2:
-                location = "North";
-                break;
-            case 3:
-                location = "NE";
-                break;
-            case 4:
-                location = "NW";
-                break;
-            case 5:
-                location = "East";
-                break;
-            case 6:
-                location = "West";
-                break;
-            case 7:
-                location = "SE";
-                break;
-            case 8:
-                location = "SW";
-                break;
-            case 9:
-            case 10:
-                location = "South";
-                break;
-        }
-        return location;
-    }
 }

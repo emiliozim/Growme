@@ -14,7 +14,7 @@
 
         <ImageView
             android:id="@+id/thumbnailImageView"
-            android:layout_width="100dp"
+            android:layout_width="150dp"
             android:layout_height="100dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
