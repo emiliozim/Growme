@@ -12,6 +12,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.view.inputmethod.InputConnectionCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
@@ -22,12 +23,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.MimeTypeMap;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -64,26 +71,27 @@ public class AddFragment extends Fragment {
 
     private static final int REQUEST_IMAGE_GALLERY = 1;
     private static final int REQUEST_IMAGE_CAPTURE = 1;
-    String currentPhotoPath;
+    String tempStringImageView;
     Uri imageUri;
     public String savedImageName;
     private String downloadUri;
     ImageView imageView, btnAddPictureFromCamera, btnAddPictureFromGallery;
     Button buttonAddPlantToList;
-    private FirebaseFirestore firebaseDB;
-    private FirebaseUser user;
-    private CollectionReference plantCollectionReference;
+    private CollectionReference plantCollectionReference, plantCollectionReferenceMain;
     private List<String> plantUidList;
     private ListenerRegistration listenerRegistration;
-    private List<Plant> plantList;
+    private List<Plant> plantList = new ArrayList<>();
     public List<Uri> uriList = new ArrayList<>();
+    public String[] testArr = {"Oregano", "Thyme", "Basil", "Rosemary", "Coriander", "Parsley", "Tarragon", "Mint", "Sage", "Dill"};
     private Plant plant;
     private String plantType, plantDescription;
     private int plantWater, plantSunlight, plantFertilizer;
-    private  DocumentReference documentReference;
     private  EditText editPlantDescription, editPlantType, editPlantWater, editPlantSunlight, editPlantFertilizer;
-    StorageReference storageRef;
+    private ArrayAdapter<String> adapter;
+    StorageReference storageRef, storageRefMain;
     FirebaseStorage storage;
+    FirebaseFirestore firebaseDB;
+
 
     public AddFragment() {
         // Required empty public constructor
@@ -97,20 +105,67 @@ public class AddFragment extends Fragment {
     }
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        // Assign variable
+        AutoCompleteTextView autoCompleteTextView = view.findViewById(R.id.autoCompleteTextViewAdd);
          imageView = view.findViewById(R.id.addPictureImageView);
          imageView.setImageResource(R.drawable.imageholder);
          btnAddPictureFromCamera =  view.findViewById(R.id.btnAddPictureFromCamera);
          btnAddPictureFromGallery =  view.findViewById(R.id.btnAddPictureFromGallery);
          buttonAddPlantToList = view.findViewById(R.id.btnAddPlantToList);
          storageRef = FirebaseStorage.getInstance().getReference("plants");
-
+        storageRefMain = FirebaseStorage.getInstance().getReference("mainPlantDB");
          plant = new Plant();
-
          firebaseDB = FirebaseFirestore.getInstance();
-         user = FirebaseAuth.getInstance().getCurrentUser();
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
          plantCollectionReference = firebaseDB.collection(user.getEmail());
+        editPlantDescription = getView().findViewById(R.id.editTextTextPlantDescriptionDetails);
+        editPlantType = getView().findViewById(R.id.editTextTextPlantNameDetails);
+        editPlantWater = getView().findViewById(R.id.editTextEditWater);
+        editPlantSunlight = getView().findViewById(R.id.editTextEditSun);
+        editPlantFertilizer = getView().findViewById(R.id.editTextEditFertilizer);
+        Toast.makeText(getContext(), "come", Toast.LENGTH_SHORT).show();
 
 
+
+
+
+        adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_expandable_list_item_1, testArr);
+        autoCompleteTextView.setAdapter(adapter);
+
+        autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+                DocumentReference documentReference = firebaseDB.collection("mainPlantDB").document(adapter.getItem(position));
+                documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        DocumentSnapshot documentSnapshot = task.getResult();
+                        Plant plantFromDB = documentSnapshot.toObject(Plant.class);
+                        editPlantType.setText(plantFromDB.getType());
+                        editPlantDescription.setText(plantFromDB.getDescription());
+                        editPlantWater.setText(String.valueOf(plantFromDB.getWater()));
+                        editPlantSunlight.setText(String.valueOf(plantFromDB.getSunlight()));
+                        editPlantFertilizer.setText(String.valueOf(plantFromDB.getFertilizer()));
+                        tempStringImageView = plantFromDB.getImageID();
+                        plantList.add(plantFromDB);
+
+                        if(plantFromDB.getImageID() != null && !plantFromDB.getImageID().isEmpty()){
+                            Glide.with(imageView.getContext()).load(plantFromDB.getImageID())
+                                    .into(imageView);
+                        }else if(plantFromDB.getUriImage() != null && !plantFromDB.getUriImage().equals("") ){
+                            Uri uri = Uri.parse(plantFromDB.getUriImage());
+                            imageView.setImageURI(uri);
+
+                        }else {
+                            imageView.setImageResource(R.drawable.imageholder);
+                        }
+                    }
+                });
+
+            }
+        });
 
         btnAddPictureFromCamera.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -127,7 +182,9 @@ public class AddFragment extends Fragment {
         buttonAddPlantToList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                if(tempStringImageView != null) {
+                    plant.setImageID(tempStringImageView);
+                }
                 if(imageUri != null) {
                     editPlantDescription = getView().findViewById(R.id.editTextTextPlantDescriptionDetails);
                     editPlantType = getView().findViewById(R.id.editTextTextPlantNameDetails);
@@ -144,12 +201,38 @@ public class AddFragment extends Fragment {
                     plant.setWater(plantWater);
                     plant.setSunlight(plantSunlight);
                     plant.setFertilizer(plantFertilizer);
-
-
                     uploadFile();
                     AddFragmentDirections.ActionAddFragmentToHomeFragment action = AddFragmentDirections.actionAddFragmentToHomeFragment();
                     Navigation.findNavController(view).navigate(action);
+                }
+                else if (imageUri == null && plantList.get(0) != null){
+                    editPlantDescription = getView().findViewById(R.id.editTextTextPlantDescriptionDetails);
+                    editPlantType = getView().findViewById(R.id.editTextTextPlantNameDetails);
+                    editPlantWater = getView().findViewById(R.id.editTextEditWater);
+                    editPlantSunlight = getView().findViewById(R.id.editTextEditSun);
+                    editPlantFertilizer = getView().findViewById(R.id.editTextEditFertilizer);
+                    plantType = editPlantType.getText().toString();
+                    plantDescription = editPlantDescription.getText().toString();
+                    plantWater = Integer.parseInt(editPlantWater.getText().toString());
+                    plantSunlight = Integer.parseInt(editPlantSunlight.getText().toString());
+                    plantFertilizer = Integer.parseInt(editPlantFertilizer.getText().toString());
+
+                    plant.setType(plantType);
+                    plant.setDescription(plantDescription);
+                    plant.setWater(plantWater);
+                    plant.setSunlight(plantSunlight);
+                    plant.setFertilizer(plantFertilizer);
+                    plant.setImageID(plantList.get(0).getImageID());
+                    plantList.remove(0);
+
+
+
+                    plantCollectionReference.add(plant);
+                    AddFragmentDirections.ActionAddFragmentToHomeFragment action = AddFragmentDirections.actionAddFragmentToHomeFragment();
+                    Navigation.findNavController(view).navigate(action);
                 }else{
+                    Log.d("ff",plantList.get(0).getType());
+
                     Toast.makeText(getContext(), "Need to add a image!", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -160,7 +243,7 @@ public class AddFragment extends Fragment {
     private void uploadFile(){
         StorageReference storageReference = storageRef.child(System.currentTimeMillis() + "." + getFileExtension(imageUri));
 
-// Register observers to listen for when the download is done or if it fails
+        // Register observers to listen for when the download is done or if it fails
         storageReference.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -229,6 +312,7 @@ public class AddFragment extends Fragment {
             imageView.setImageBitmap(imageBitmap);
         }
     }
+
     // add image form camera
     private void dispatchTakePictureIntent() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);

@@ -129,6 +129,7 @@ public class HomeFragment extends Fragment {
         super.onCreateView(inflater, container, savedInstanceState);
         firebaseDB = FirebaseFirestore.getInstance();
         user = FirebaseAuth.getInstance().getCurrentUser();
+        
         plantCollectionReference = firebaseDB.collection(user.getEmail());
 
         return inflater.inflate(R.layout.fragment_home, container, false);

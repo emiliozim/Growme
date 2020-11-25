@@ -21,4 +21,13 @@
     <string name="sing_up_button">Sing up button</string>
     <string name="app_logo_growme">App logo, GrowMe</string>
     <string name="welcome_to_growme_this_is_a_plant_organiser_app_to_keep_your_plants_happy_an_healthy_log_in_and_get_started_if_you_are_new_here_sign_up_with_one_simple_button_click">Welcome to GrowMe! This is a plant organiser app to keep your plants happy an healthy. Log in and get started! If you are new here, sign up with one simple button click.</string>
+    <string name="water_scale_1_7">Water scale 1–7</string>
+    <string name="sunlight_scale_1_8">Sunlight scale 1–8</string>
+    <string name="fertilizer_scale_1_8">Fertilizer scale 1–8</string>
+    <string name="number">Number</string>
+
+    <string name="open_camera">Open camera</string>
+    <string name="plant_image">Plant image</string>
+    <string name="open_gallery">Open gallery</string>
+    <string name="select_plant">Select plant</string>
 </resources>

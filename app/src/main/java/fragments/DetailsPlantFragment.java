@@ -74,11 +74,29 @@ public class DetailsPlantFragment extends Fragment {
         editTextSun = view.findViewById(R.id.editTextSun);
         editTextFertilizer = view.findViewById(R.id.editTextFertilizer);
         ImageView btnBack = view.findViewById(R.id.btnDetailsBack);
-        ImageView btnEdit = view.findViewById(R.id.btnDetailsEdit);
+        final ImageView btnSave = view.findViewById(R.id.btnDetailsEdit);
+        final ImageView btnEdit = view.findViewById(R.id.floatingActionButtonDetailsEdit);
+
 
         FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         documentReference = firebaseFirestore.collection(user.getEmail()).document(plantUid);
+
+        btnEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                btnEdit.setVisibility(View.INVISIBLE);
+                btnEdit.setClickable(false);
+                btnSave.setVisibility(View.VISIBLE);
+                btnSave.setClickable(true);
+                name.setFocusable(true);
+                description.setFocusable(true);
+                editTextWater.setFocusable(true);
+                editTextSun.setFocusable(true);
+                editTextFertilizer.setFocusable(true);
+            }
+        });
+
 
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,7 +106,7 @@ public class DetailsPlantFragment extends Fragment {
 
             }
         });
-        btnEdit.setOnClickListener(new View.OnClickListener() {
+        btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // documentReference.update("type", "s","s");
@@ -124,11 +142,10 @@ public class DetailsPlantFragment extends Fragment {
                     editTextSun.setText(plant.getLocationArray().get(plant.getSunlight()));
                     editTextFertilizer.setText(Integer.toString(plant.getFertilizer()));
 
-
                     if(plant.getImageID() != null && !plant.getImageID().isEmpty()){
                         Glide.with(imageView.getContext()).load(plant.getImageID())
                                 .into(imageView);
-                    }else if(plant.getUriImage() != null && !plant.equals("") ){
+                    }else if(plant.getUriImage() != null && !plant.getUriImage().equals("") ){
                         Uri uri = Uri.parse(plant.getUriImage());
                         imageView.setImageURI(uri);
 

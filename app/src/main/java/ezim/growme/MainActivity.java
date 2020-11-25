@@ -51,12 +51,18 @@ public class MainActivity extends AppCompatActivity {
     }
     public void generateTestData(){
         firebaseDB = FirebaseFirestore.getInstance();
-        plantCollectionReference = firebaseDB.collection("plant");
+       // plantCollectionReference = firebaseDB.collection("mainPlantDB");
         ArrayList<Plant> plants = new ArrayList<>();
-        plants.add(new Plant ("Basil", "Requires high amount sun light, minimum degrees 14 celsius"));
-        plants.add(new Plant ( "Thyme", "Requires high amount sun light, minimum degrees 14 celsius"));
-        plants.add(new Plant ( "Oregano", "Requires high amount sun light, minimum degrees 14 celsius"));
-        plants.add(new Plant ( "Tomatillo", "Requires high amount sun light, minimum degrees 14 celsius"));
+        plants.add(new Plant ( "Oregano", "Requires high amount sun light, minimum degrees 14 celsius","" , "", 0, 0, 0, ""));
+        plants.add(new Plant ( "Thyme", "Requires high amount sun light, minimum degrees 14 celsius","" , "", 0, 0, 0, ""));
+        plants.add(new Plant ("Basil", "Requires high amount sun light, minimum degrees 14 celsius","" , "", 0, 0, 0, ""));
+        plants.add(new Plant ( "Rosemary", "Requires high amount sun light, minimum degrees 14 celsius","" , "", 0, 0, 0, ""));
+        plants.add(new Plant ( "coriander", "Requires high amount sun light, minimum degrees 14 celsius","" , "", 0, 0, 0, ""));
+        plants.add(new Plant ( "Parsley", "Requires high amount sun light, minimum degrees 14 celsius","" , "", 0, 0, 0, ""));
+        plants.add(new Plant ( "Tarragon", "Requires high amount sun light, minimum degrees 14 celsius","" , "", 0, 0, 0, ""));
+        plants.add(new Plant ( "mint", "Requires high amount sun light, minimum degrees 14 celsius","" , "", 0, 0, 0, ""));
+        plants.add(new Plant ( "sage", "Requires high amount sun light, minimum degrees 14 celsius","" , "", 0, 0, 0, ""));
+        plants.add(new Plant ( "dill", "Requires high amount sun light, minimum degrees 14 celsius","" , "", 0, 0, 0, ""));
 
         for (Plant plant: plants){
             plantCollectionReference.add(plant);

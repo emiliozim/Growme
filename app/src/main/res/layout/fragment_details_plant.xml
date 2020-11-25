@@ -13,11 +13,13 @@
         android:layout_marginTop="80dp"
         android:ems="10"
         android:hint="@string/plant_name"
+        android:focusable="false"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.014"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        />
 
     <EditText
         android:id="@+id/editTextTextPlantDescriptionDetails"
@@ -27,6 +29,7 @@
         android:ems="10"
         android:gravity="start|top"
         android:hint="@string/description"
+        android:focusable="false"
         android:inputType="textMultiLine"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.333"
@@ -64,8 +67,22 @@
         android:layout_marginEnd="100dp"
         android:layout_marginRight="100dp"
         android:layout_marginBottom="80dp"
-        android:clickable="true"
+        android:clickable="false"
+        android:visibility="invisible"
         android:src="@drawable/save_button"
+        app:backgroundTint="@color/primaryColor"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floatingActionButtonDetailsEdit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="100dp"
+        android:layout_marginRight="100dp"
+        android:layout_marginBottom="80dp"
+        android:clickable="true"
+        android:src="@drawable/edit_button"
         app:backgroundTint="@color/primaryColor"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -179,8 +196,8 @@
         android:layout_marginLeft="2dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="10"
         android:textSize="14sp"
+        android:focusable="false"
         app:layout_constraintBottom_toBottomOf="@+id/textViewWater"
         app:layout_constraintStart_toEndOf="@+id/textViewWater"
         app:layout_constraintTop_toTopOf="@+id/textViewWater" />
@@ -191,25 +208,27 @@
         android:layout_height="39dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="30"
         android:textSize="14sp"
+        android:focusable="false"
         app:layout_constraintBottom_toBottomOf="@+id/textViewFertilizer"
         app:layout_constraintStart_toEndOf="@+id/textViewFertilizer"
         app:layout_constraintTop_toTopOf="@+id/textViewFertilizer" />
 
     <EditText
         android:id="@+id/editTextSun"
-        android:layout_width="40dp"
+        android:layout_width="55dp"
         android:layout_height="39dp"
         android:layout_marginStart="4dp"
         android:layout_marginLeft="4dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="10"
         android:textSize="14sp"
+        android:focusable="false"
         app:layout_constraintBottom_toBottomOf="@+id/textViewSun"
         app:layout_constraintStart_toEndOf="@+id/textViewSun"
         app:layout_constraintTop_toTopOf="@+id/textViewSun"
         app:layout_constraintVertical_bias="0.55" />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
