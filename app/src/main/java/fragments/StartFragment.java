@@ -44,8 +44,8 @@ public class StartFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        ImageButton btnLogIn = view.findViewById(R.id.imageButtonLogIn);
-        ImageButton btnSignUp = view.findViewById(R.id.imageButtonSignUp);
+        Button btnLogIn = view.findViewById(R.id.imageButtonLogIn);
+        Button btnSignUp = view.findViewById(R.id.imageButtonSignUp);
         btnLogIn.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_startFragment_to_loginFragment));
         btnSignUp.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_startFragment_to_signUpFragment));
     }

@@ -6,29 +6,33 @@
     tools:context="fragments.StartFragment"
     app:navGraph="@navigation/nav_graph" >
 
-    <ImageButton
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/imageButtonLogIn"
         android:layout_width="65dp"
         android:layout_height="65dp"
         android:layout_marginStart="70dp"
         android:layout_marginLeft="70dp"
-        android:layout_marginBottom="85dp"
-        android:src="@drawable/ic_baseline_login_24"
+        android:layout_marginBottom="32dp"
+        android:contentDescription="@string/log_in_button"
+        app:icon="@drawable/ic_action_login"
+        app:iconTint="@color/design_default_color_on_secondary"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:contentDescription="@string/log_in_button" />
+        app:layout_constraintStart_toStartOf="parent" />
 
-    <ImageButton
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/imageButtonSignUp"
         android:layout_width="65dp"
         android:layout_height="65dp"
         android:layout_marginEnd="70dp"
         android:layout_marginRight="70dp"
-        android:layout_marginBottom="85dp"
-        android:src="@drawable/ic_baseline_signin_ind_24"
+        android:layout_marginBottom="32dp"
+        android:contentDescription="@string/sing_up_button"
+        android:gravity="center"
+        app:icon="@drawable/ic_action_sign_in"
+        app:iconGravity="textEnd"
+        app:iconTint="@color/design_default_color_on_secondary"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:contentDescription="@string/sing_up_button"/>
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <TextView
         android:id="@+id/textView"
@@ -52,12 +56,12 @@
         android:id="@+id/imageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="8dp"
+        android:contentDescription="@string/app_logo_growme"
         android:src="@drawable/ic_logo_foreground"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:contentDescription="@string/app_logo_growme" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textView3"

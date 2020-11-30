@@ -8,13 +8,13 @@
 
     <Button
         android:id="@+id/btnAddPlantToList"
-        android:layout_width="170dp"
-        android:layout_height="56dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="80dp"
-        android:layout_marginBottom="80dp"
+        android:layout_marginBottom="8dp"
         android:text="@string/add_plant_to_list"
         android:textColor="@android:color/black"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/addPictureImageView" />
@@ -23,7 +23,7 @@
         android:id="@+id/editTextTextPlantNameDetails"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="120dp"
+        android:layout_marginTop="8dp"
         android:autofillHints="Name of the plant"
         android:ems="10"
         android:hint="@string/plant_name"
@@ -31,32 +31,32 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/autoCompleteTextViewAdd" />
 
     <EditText
         android:id="@+id/editTextTextPlantDescriptionDetails"
         android:layout_width="384dp"
         android:layout_height="102dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="8dp"
+        android:autofillHints="Description of the plant"
         android:ems="10"
         android:gravity="start|top"
         android:hint="@string/description"
         android:inputType="textMultiLine"
         app:layout_constraintEnd_toEndOf="@+id/editTextTextPlantNameDetails"
         app:layout_constraintStart_toStartOf="@+id/editTextTextPlantNameDetails"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPlantNameDetails"
-        android:autofillHints="Description of the plant" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextTextPlantNameDetails" />
 
     <ImageView
         android:id="@+id/addPictureImageView"
         android:layout_width="150dp"
         android:layout_height="100dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="8dp"
+        android:contentDescription="@string/plant_image"
         app:layout_constraintEnd_toEndOf="@+id/editTextTextPlantDescriptionDetails"
         app:layout_constraintStart_toStartOf="@+id/editTextTextPlantDescriptionDetails"
         app:layout_constraintTop_toBottomOf="@+id/textView4"
-        tools:src="@drawable/imageholder"
-        android:contentDescription="@string/plant_image" />
+        tools:src="@drawable/imageholder" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/btnAddPictureFromCamera"
@@ -65,32 +65,32 @@
         android:layout_marginStart="100dp"
         android:layout_marginLeft="100dp"
         android:clickable="true"
+        android:contentDescription="@string/open_camera"
+        android:focusable="true"
         android:src="@drawable/camera_button"
         app:backgroundTint="@color/primaryColor"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addPictureImageView"
-        android:contentDescription="@string/open_camera"
-        android:focusable="true" />
+        app:layout_constraintTop_toBottomOf="@+id/addPictureImageView" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/btnAddPictureFromGallery"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="true"
+        android:contentDescription="@string/open_gallery"
+        android:focusable="true"
         android:src="@drawable/gallery_button"
         app:backgroundTint="@color/primaryColor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.492"
         app:layout_constraintStart_toEndOf="@+id/btnAddPictureFromCamera"
-        app:layout_constraintTop_toBottomOf="@+id/addPictureImageView"
-        android:contentDescription="@string/open_gallery"
-        android:focusable="true" />
+        app:layout_constraintTop_toBottomOf="@+id/addPictureImageView" />
 
     <TextView
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="8dp"
         android:text="@string/add_image"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -135,27 +135,27 @@
         android:id="@+id/editTextEditFertilizer"
         android:layout_width="58dp"
         android:layout_height="44dp"
+        android:autofillHints="Number 1-8"
         android:ems="10"
+        android:hint="@string/number"
         android:inputType="textPersonName"
         android:textSize="14sp"
-        android:hint="@string/number"
         app:layout_constraintEnd_toEndOf="@+id/textViewEditFertilizer"
         app:layout_constraintStart_toStartOf="@+id/textViewEditFertilizer"
-        app:layout_constraintTop_toBottomOf="@+id/textViewEditFertilizer"
-        android:autofillHints="Number 1-8" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewEditFertilizer" />
 
     <EditText
         android:id="@+id/editTextEditSun"
         android:layout_width="58dp"
         android:layout_height="44dp"
+        android:autofillHints="Number 1-8"
         android:ems="10"
+        android:hint="@string/number"
         android:inputType="textPersonName"
         android:textSize="14sp"
-        android:hint="@string/number"
         app:layout_constraintEnd_toEndOf="@+id/textViewEditSun"
         app:layout_constraintStart_toStartOf="@+id/textViewEditSun"
-        app:layout_constraintTop_toBottomOf="@+id/textViewEditSun"
-        android:autofillHints="Number 1-8" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewEditSun" />
 
     <EditText
         android:id="@+id/editTextEditWater"
@@ -172,16 +172,23 @@
 
     <AutoCompleteTextView
         android:id="@+id/autoCompleteTextViewAdd"
-        android:layout_width="209dp"
-        android:layout_height="45dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:completionHint="Select a plant"
+        android:completionThreshold="1"
         android:hint="@string/select_plant"
         android:text=""
-        android:completionThreshold="1"
-        android:completionHint="Select a plant"
-        app:layout_constraintBottom_toTopOf="@+id/editTextTextPlantNameDetails"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.876" />
+        app:layout_constraintTop_toTopOf="parent" />
 
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigationView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:menu="@menu/nav_menu" />
 </androidx.constraintlayout.widget.ConstraintLayout>

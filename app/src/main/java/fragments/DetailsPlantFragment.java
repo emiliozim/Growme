@@ -74,7 +74,7 @@ public class DetailsPlantFragment extends Fragment {
         editTextWater = view.findViewById(R.id.editTextWater);
         editTextSun = view.findViewById(R.id.editTextSun);
         editTextFertilizer = view.findViewById(R.id.editTextFertilizer);
-        ImageView btnBack = view.findViewById(R.id.btnDetailsBack);
+
         final ImageView btnSave = view.findViewById(R.id.btnDetailsEdit);
         final ImageView btnEdit = view.findViewById(R.id.floatingActionButtonDetailsEdit);
 
@@ -102,14 +102,7 @@ public class DetailsPlantFragment extends Fragment {
         });
 
 
-        btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                DetailsPlantFragmentDirections.ActionDetailsPlantFragmentToHomeFragment action = DetailsPlantFragmentDirections.actionDetailsPlantFragmentToHomeFragment();
-                Navigation.findNavController(view).navigate(action);
 
-            }
-        });
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -121,6 +114,8 @@ public class DetailsPlantFragment extends Fragment {
                 documentReference.update("sunlight", Integer.parseInt(String.valueOf(plant.getLocationArray().indexOf(editTextSun.getText().toString()))));
                 documentReference.update("fertilizer",  Integer.parseInt(editTextFertilizer.getText().toString()));
                 Toast.makeText(getContext(), "Plant Updated", Toast.LENGTH_SHORT).show();
+                 DetailsPlantFragmentDirections.ActionDetailsPlantFragmentToHomeFragment action = DetailsPlantFragmentDirections.actionDetailsPlantFragmentToHomeFragment();
+                 Navigation.findNavController(view).navigate(action);
             }
         });
 

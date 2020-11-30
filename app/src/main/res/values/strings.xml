@@ -30,4 +30,6 @@
     <string name="plant_image">Plant image</string>
     <string name="open_gallery">Open gallery</string>
     <string name="select_plant">Select plant</string>
+    <string name="home">Home</string>
+    <string name="logout">Logout</string>
 </resources>
