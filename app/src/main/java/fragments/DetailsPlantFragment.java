@@ -1,5 +1,6 @@
 package fragments;
 
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -94,6 +95,9 @@ public class DetailsPlantFragment extends Fragment {
                 editTextWater.setFocusable(true);
                 editTextSun.setFocusable(true);
                 editTextFertilizer.setFocusable(true);
+
+
+
             }
         });
 
@@ -139,7 +143,7 @@ public class DetailsPlantFragment extends Fragment {
 
                     editTextWater.setText(Integer.toString(plant.getWater()));
 
-                    editTextSun.setText(plant.getLocationArray().get(plant.getSunlight()));
+                    editTextSun.setText(plant.getLocationArray().get(plant.getSunlight()-1));
                     editTextFertilizer.setText(Integer.toString(plant.getFertilizer()));
 
                     if(plant.getImageID() != null && !plant.getImageID().isEmpty()){

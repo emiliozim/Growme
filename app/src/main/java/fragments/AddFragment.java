@@ -123,7 +123,7 @@ public class AddFragment extends Fragment {
         editPlantWater = getView().findViewById(R.id.editTextEditWater);
         editPlantSunlight = getView().findViewById(R.id.editTextEditSun);
         editPlantFertilizer = getView().findViewById(R.id.editTextEditFertilizer);
-        Toast.makeText(getContext(), "come", Toast.LENGTH_SHORT).show();
+
 
 
 
