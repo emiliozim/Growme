@@ -75,8 +75,8 @@ public class AddFragment extends Fragment {
     Uri imageUri;
     public String savedImageName;
     private String downloadUri;
-    ImageView imageView, btnAddPictureFromCamera, btnAddPictureFromGallery;
-    Button buttonAddPlantToList;
+    ImageView imageView, btnAddPictureFromCamera, btnAddPictureFromGallery, buttonAddPlantToList;
+
     private CollectionReference plantCollectionReference, plantCollectionReferenceMain;
     private List<String> plantUidList;
     private ListenerRegistration listenerRegistration;

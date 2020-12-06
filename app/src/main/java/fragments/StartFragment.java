@@ -27,7 +27,6 @@ import static fragments.StartFragmentDirections.actionStartFragmentToLoginFragme
 
 public class StartFragment extends Fragment {
 
-
     public StartFragment() {
         // Required empty public constructor
     }
@@ -43,6 +42,7 @@ public class StartFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
 
         Button btnLogIn = view.findViewById(R.id.imageButtonLogIn);
         Button btnSignUp = view.findViewById(R.id.imageButtonSignUp);

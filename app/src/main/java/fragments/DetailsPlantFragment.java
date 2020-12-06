@@ -36,7 +36,7 @@ import model.Plant;
 
 public class DetailsPlantFragment extends Fragment {
 
-    private ImageView imageView;
+    private ImageView imageView, btnSave, btnEdit;
     private EditText name, description, editTextWater, editTextSun, editTextFertilizer;
     private ProgressBar progressBarWater, progressBarSun, progressBarFertilizer;
     private Plant plant;
@@ -75,8 +75,8 @@ public class DetailsPlantFragment extends Fragment {
         editTextSun = view.findViewById(R.id.editTextSun);
         editTextFertilizer = view.findViewById(R.id.editTextFertilizer);
 
-        final ImageView btnSave = view.findViewById(R.id.btnDetailsEdit);
-        final ImageView btnEdit = view.findViewById(R.id.floatingActionButtonDetailsEdit);
+        btnSave = view.findViewById(R.id.btnDetailsEdit);
+        btnEdit = view.findViewById(R.id.floatingActionButtonDetailsEdit);
 
 
         FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();

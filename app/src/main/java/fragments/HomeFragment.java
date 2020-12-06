@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
@@ -49,6 +50,7 @@ public class HomeFragment extends Fragment {
     private PlantRecyclerAdapter plantRecyclerAdapter;
     private ListenerRegistration listenerRegistration;
     private FirebaseUser user;
+
 
     public HomeFragment() {
 
@@ -129,7 +131,6 @@ public class HomeFragment extends Fragment {
         super.onCreateView(inflater, container, savedInstanceState);
         firebaseDB = FirebaseFirestore.getInstance();
         user = FirebaseAuth.getInstance().getCurrentUser();
-        
         plantCollectionReference = firebaseDB.collection(user.getEmail());
 
         return inflater.inflate(R.layout.fragment_home, container, false);

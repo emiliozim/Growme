@@ -1,34 +1,18 @@
 package ezim.growme;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
+import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
-
-import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.MenuItem;
-import android.widget.Toast;
-
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.material.bottomnavigation.BottomNavigationItemView;
+import android.view.View;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import fragments.LoginFragment;
-import fragments.SignUpFragment;
-import model.Plant;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -36,38 +20,31 @@ public class MainActivity extends AppCompatActivity {
 
     private FirebaseFirestore firebaseDB;
     private CollectionReference plantCollectionReference;
+    BottomNavigationView bottomNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d("emilio","start");
+
         setContentView(R.layout.activity_main);
 
+        NavController controller = Navigation.findNavController(this, R.id.Fragment);
+        bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        NavigationUI.setupWithNavController(bottomNavigationView, controller);
 
-        //generateTestData();
+        controller.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
+            @Override
+            public void onDestinationChanged(@NonNull NavController controller, @NonNull NavDestination destination, @Nullable Bundle arguments) {
+                if(destination.getId() == R.id.startFragment || destination.getId() == R.id.signUpFragment || destination.getId() == R.id.loginFragment){
+                    bottomNavigationView.setVisibility(View.INVISIBLE);
+                    bottomNavigationView.setClickable(false);
+                }else{
+                    bottomNavigationView.setClickable(true);
+                    bottomNavigationView.setVisibility(View.VISIBLE);
+                }
+            }
+        });
 
-
-
-    }
-    public void generateTestData(){
-        firebaseDB = FirebaseFirestore.getInstance();
-       // plantCollectionReference = firebaseDB.collection("mainPlantDB");
-        ArrayList<Plant> plants = new ArrayList<>();
-        plants.add(new Plant ( "Oregano", "Requires high amount sun light, minimum degrees 14 celsius","" , "", 0, 0, 0, ""));
-        plants.add(new Plant ( "Thyme", "Requires high amount sun light, minimum degrees 14 celsius","" , "", 0, 0, 0, ""));
-        plants.add(new Plant ("Basil", "Requires high amount sun light, minimum degrees 14 celsius","" , "", 0, 0, 0, ""));
-        plants.add(new Plant ( "Rosemary", "Requires high amount sun light, minimum degrees 14 celsius","" , "", 0, 0, 0, ""));
-        plants.add(new Plant ( "coriander", "Requires high amount sun light, minimum degrees 14 celsius","" , "", 0, 0, 0, ""));
-        plants.add(new Plant ( "Parsley", "Requires high amount sun light, minimum degrees 14 celsius","" , "", 0, 0, 0, ""));
-        plants.add(new Plant ( "Tarragon", "Requires high amount sun light, minimum degrees 14 celsius","" , "", 0, 0, 0, ""));
-        plants.add(new Plant ( "mint", "Requires high amount sun light, minimum degrees 14 celsius","" , "", 0, 0, 0, ""));
-        plants.add(new Plant ( "sage", "Requires high amount sun light, minimum degrees 14 celsius","" , "", 0, 0, 0, ""));
-        plants.add(new Plant ( "dill", "Requires high amount sun light, minimum degrees 14 celsius","" , "", 0, 0, 0, ""));
-
-        for (Plant plant: plants){
-            plantCollectionReference.add(plant);
-        }
 
     }
-
 }
