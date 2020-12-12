@@ -92,6 +92,12 @@ public class LoginFragment extends Fragment {
         editPassword = getView().findViewById(R.id.editTextTextPassword);
         firebaseAuth = FirebaseAuth.getInstance();
 
+        if(firebaseAuth.getCurrentUser() != null){
+            Toast.makeText(getContext(), firebaseAuth.getCurrentUser().getEmail() + " is logged out", Toast.LENGTH_SHORT).show();
+            firebaseAuth.signOut();
+
+        }
+
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

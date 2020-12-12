@@ -103,6 +103,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/textViewEditWater"
         app:layout_constraintStart_toEndOf="@+id/textViewEditWater"
         app:layout_constraintTop_toTopOf="@+id/textViewEditWater" />
+
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnInfoSunInAdd"
         android:layout_width="19dp"
@@ -117,6 +118,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/textViewEditSun"
         app:layout_constraintStart_toEndOf="@+id/textViewEditSun"
         app:layout_constraintTop_toTopOf="@+id/textViewEditSun" />
+
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnInfoFertilizerInAdd"
         android:layout_width="19dp"

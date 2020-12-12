@@ -45,7 +45,7 @@ import model.Plant;
 public class HomeFragment extends Fragment {
     private FirebaseFirestore firebaseDB;
     private CollectionReference plantCollectionReference;
-    private List<Plant> plantList;
+    private static List<Plant> plantList;
     private static List<String> plantUidList ;
     private PlantRecyclerAdapter plantRecyclerAdapter;
     private ListenerRegistration listenerRegistration;
@@ -56,6 +56,13 @@ public class HomeFragment extends Fragment {
 
     }
 
+    public static List<Plant> getPlantList() {
+        return plantList;
+    }
+
+    public static void setPlantList(List<Plant> plantList) {
+        HomeFragment.plantList = plantList;
+    }
 
     public static List<String> getPlantUidList() {
         return plantUidList;

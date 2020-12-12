@@ -6,7 +6,13 @@
         android:icon="@drawable/ic_action_home"
         android:title="@string/home" />
     <item
+        android:id="@+id/listFragment"
+        android:icon="@drawable/ic_action_list"
+        android:title="@string/list" />
+    <item
         android:id="@+id/loginFragment"
         android:icon="@drawable/ic_action_log_out"
         android:title="@string/logout" />
+
+
 </menu>

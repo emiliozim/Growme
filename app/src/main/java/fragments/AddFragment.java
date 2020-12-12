@@ -109,20 +109,20 @@ public class AddFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         // Assign variable
         AutoCompleteTextView autoCompleteTextView = view.findViewById(R.id.autoCompleteTextViewAdd);
-         imageView = view.findViewById(R.id.addPictureImageView);
-         imageView.setImageResource(R.drawable.imageholder);
-         btnAddPictureFromCamera =  view.findViewById(R.id.btnAddPictureFromCamera);
-         btnAddPictureFromGallery =  view.findViewById(R.id.btnAddPictureFromGallery);
-         buttonAddPlantToList = view.findViewById(R.id.btnAddPlantToList);
-         btnInfoWater = view.findViewById(R.id.btnInfoWaterInAdd);
-         btnInfoSun = view.findViewById(R.id.btnInfoSunInAdd);
-         btnInfoFertilizer = view.findViewById(R.id.btnInfoFertilizerInAdd);
-         storageRef = FirebaseStorage.getInstance().getReference("plants");
+        imageView = view.findViewById(R.id.addPictureImageView);
+        imageView.setImageResource(R.drawable.imageholder);
+        btnAddPictureFromCamera =  view.findViewById(R.id.btnAddPictureFromCamera);
+        btnAddPictureFromGallery =  view.findViewById(R.id.btnAddPictureFromGallery);
+        buttonAddPlantToList = view.findViewById(R.id.btnAddPlantToList);
+        btnInfoWater = view.findViewById(R.id.btnInfoWaterInAdd);
+        btnInfoSun = view.findViewById(R.id.btnInfoSunInAdd);
+        btnInfoFertilizer = view.findViewById(R.id.btnInfoFertilizerInAdd);
+        storageRef = FirebaseStorage.getInstance().getReference("plants");
         storageRefMain = FirebaseStorage.getInstance().getReference("mainPlantDB");
-         plant = new Plant();
-         firebaseDB = FirebaseFirestore.getInstance();
+        plant = new Plant();
+        firebaseDB = FirebaseFirestore.getInstance();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-         plantCollectionReference = firebaseDB.collection(user.getEmail());
+        plantCollectionReference = firebaseDB.collection(user.getEmail());
         editPlantDescription = getView().findViewById(R.id.editTextTextPlantDescriptionDetails);
         editPlantType = getView().findViewById(R.id.editTextTextPlantNameDetails);
         editPlantWater = getView().findViewById(R.id.editTextEditWater);
@@ -130,7 +130,7 @@ public class AddFragment extends Fragment {
         editPlantFertilizer = getView().findViewById(R.id.editTextEditFertilizer);
 
 
-        adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_expandable_list_item_1, testArr);
+        adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, testArr);
         autoCompleteTextView.setAdapter(adapter);
 
         autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -172,7 +172,7 @@ public class AddFragment extends Fragment {
         btnInfoWater.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               Toast.makeText(getContext(),"Enter a number between 1 to 7, witch indicates how many time a week your plant needs water", Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(),"Enter a number between 1 to 7, witch indicates how many time a week your plant needs water", Toast.LENGTH_LONG).show();
 
             }
         });
@@ -298,9 +298,9 @@ public class AddFragment extends Fragment {
 
     }
     public void downloadFile(){
-          Log.d("gg","1606142642536.png");
+        Log.d("gg","1606142642536.png");
         Log.d("gg",savedImageName);
-          storageRef.child(savedImageName).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+        storageRef.child(savedImageName).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
                 plant.setImageID(uri.toString());
