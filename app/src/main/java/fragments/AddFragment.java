@@ -19,6 +19,7 @@ import androidx.navigation.Navigation;
 
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -71,12 +72,13 @@ public class AddFragment extends Fragment {
 
     private static final int REQUEST_IMAGE_GALLERY = 1;
     private static final int REQUEST_IMAGE_CAPTURE = 1;
+    String msgArr = "";
     String tempStringImageView;
     Uri imageUri;
     public String savedImageName;
     private String downloadUri;
-    ImageView imageView, btnAddPictureFromCamera, btnAddPictureFromGallery, buttonAddPlantToList;
-
+    ImageView imageView, buttonAddPlantToList;
+    Button btnAddPictureFromCamera, btnAddPictureFromGallery, btnInfoWater ,btnInfoSun, btnInfoFertilizer;
     private CollectionReference plantCollectionReference, plantCollectionReferenceMain;
     private List<String> plantUidList;
     private ListenerRegistration listenerRegistration;
@@ -112,6 +114,9 @@ public class AddFragment extends Fragment {
          btnAddPictureFromCamera =  view.findViewById(R.id.btnAddPictureFromCamera);
          btnAddPictureFromGallery =  view.findViewById(R.id.btnAddPictureFromGallery);
          buttonAddPlantToList = view.findViewById(R.id.btnAddPlantToList);
+         btnInfoWater = view.findViewById(R.id.btnInfoWaterInAdd);
+         btnInfoSun = view.findViewById(R.id.btnInfoSunInAdd);
+         btnInfoFertilizer = view.findViewById(R.id.btnInfoFertilizerInAdd);
          storageRef = FirebaseStorage.getInstance().getReference("plants");
         storageRefMain = FirebaseStorage.getInstance().getReference("mainPlantDB");
          plant = new Plant();
@@ -123,10 +128,6 @@ public class AddFragment extends Fragment {
         editPlantWater = getView().findViewById(R.id.editTextEditWater);
         editPlantSunlight = getView().findViewById(R.id.editTextEditSun);
         editPlantFertilizer = getView().findViewById(R.id.editTextEditFertilizer);
-
-
-
-
 
 
         adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_expandable_list_item_1, testArr);
@@ -143,6 +144,7 @@ public class AddFragment extends Fragment {
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                         DocumentSnapshot documentSnapshot = task.getResult();
                         Plant plantFromDB = documentSnapshot.toObject(Plant.class);
+
                         editPlantType.setText(plantFromDB.getType());
                         editPlantDescription.setText(plantFromDB.getDescription());
                         editPlantWater.setText(String.valueOf(plantFromDB.getWater()));
@@ -167,6 +169,31 @@ public class AddFragment extends Fragment {
             }
         });
 
+        btnInfoWater.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+               Toast.makeText(getContext(),"Enter a number between 1 to 7, witch indicates how many time a week your plant needs water", Toast.LENGTH_LONG).show();
+
+            }
+        });
+
+        btnInfoSun.setOnClickListener(new View.OnClickListener() {
+            @Override
+
+            public void onClick(View view) {
+                Toast.makeText(getContext(),"Enter a number between 1 to 8, witch indicates where you should place your plant." +
+                        " (1 = north, 2 = NE, 3 = NW, 4 = east, 5 = west, 6 = SE, 7 = SW, 8 = south) ", Toast.LENGTH_LONG).show();
+
+            }
+        });
+
+        btnInfoFertilizer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getContext(),"Enter a number between 0 to 8, witch indicates how many time a mouth your plant needs fertilizer", Toast.LENGTH_LONG).show();
+            }
+        });
+
         btnAddPictureFromCamera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -182,58 +209,66 @@ public class AddFragment extends Fragment {
         buttonAddPlantToList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(tempStringImageView != null) {
-                    plant.setImageID(tempStringImageView);
-                }
-                if(imageUri != null) {
-                    editPlantDescription = getView().findViewById(R.id.editTextTextPlantDescriptionDetails);
-                    editPlantType = getView().findViewById(R.id.editTextTextPlantNameDetails);
-                    editPlantWater = getView().findViewById(R.id.editTextEditWater);
-                    editPlantSunlight = getView().findViewById(R.id.editTextEditSun);
-                    editPlantFertilizer = getView().findViewById(R.id.editTextEditFertilizer);
-                    plantType = editPlantType.getText().toString();
-                    plantDescription = editPlantDescription.getText().toString();
-                    plantWater = Integer.parseInt(editPlantWater.getText().toString());
-                    plantSunlight = Integer.parseInt(editPlantSunlight.getText().toString());
-                    plantFertilizer = Integer.parseInt(editPlantFertilizer.getText().toString());
-                    plant.setType(plantType);
-                    plant.setDescription(plantDescription);
-                    plant.setWater(plantWater);
-                    plant.setSunlight(plantSunlight);
-                    plant.setFertilizer(plantFertilizer);
-                    uploadFile();
-                    AddFragmentDirections.ActionAddFragmentToHomeFragment action = AddFragmentDirections.actionAddFragmentToHomeFragment();
-                    Navigation.findNavController(view).navigate(action);
-                }
-                else if (imageUri == null && plantList.get(0) != null){
-                    editPlantDescription = getView().findViewById(R.id.editTextTextPlantDescriptionDetails);
-                    editPlantType = getView().findViewById(R.id.editTextTextPlantNameDetails);
-                    editPlantWater = getView().findViewById(R.id.editTextEditWater);
-                    editPlantSunlight = getView().findViewById(R.id.editTextEditSun);
-                    editPlantFertilizer = getView().findViewById(R.id.editTextEditFertilizer);
-                    plantType = editPlantType.getText().toString();
-                    plantDescription = editPlantDescription.getText().toString();
-                    plantWater = Integer.parseInt(editPlantWater.getText().toString());
-                    plantSunlight = Integer.parseInt(editPlantSunlight.getText().toString());
-                    plantFertilizer = Integer.parseInt(editPlantFertilizer.getText().toString());
 
-                    plant.setType(plantType);
-                    plant.setDescription(plantDescription);
-                    plant.setWater(plantWater);
-                    plant.setSunlight(plantSunlight);
-                    plant.setFertilizer(plantFertilizer);
-                    plant.setImageID(plantList.get(0).getImageID());
-                    plantList.remove(0);
+                if(!editPlantSunlight.getText().toString().matches("[1-8]+")) {
+                    Toast.makeText(getContext(), "Sun filed can only contain numbers (1 - 8) ", Toast.LENGTH_LONG).show();
+                }else if(!editPlantWater.getText().toString().matches("[1-7]+")){
+                    Toast.makeText(getContext(), "Water field can only contain numbers (1 - 7)", Toast.LENGTH_LONG).show();
+
+                }else if(!editPlantFertilizer.getText().toString().matches("[0-8]+")){
+                    Toast.makeText(getContext(), "Fertilizer field can only contain numbers (0 - 8)", Toast.LENGTH_LONG).show();
+                }else {
+                    if (tempStringImageView != null) {
+                        plant.setImageID(tempStringImageView);
+                    }
+                    if (imageUri != null) {
+                        editPlantDescription = getView().findViewById(R.id.editTextTextPlantDescriptionDetails);
+                        editPlantType = getView().findViewById(R.id.editTextTextPlantNameDetails);
+                        editPlantWater = getView().findViewById(R.id.editTextEditWater);
+                        editPlantSunlight = getView().findViewById(R.id.editTextEditSun);
+                        editPlantFertilizer = getView().findViewById(R.id.editTextEditFertilizer);
+                        plantType = editPlantType.getText().toString();
+                        plantDescription = editPlantDescription.getText().toString();
+                        plantWater = Integer.parseInt(editPlantWater.getText().toString());
+                        plantSunlight = Integer.parseInt(editPlantSunlight.getText().toString());
+                        plantFertilizer = Integer.parseInt(editPlantFertilizer.getText().toString());
+                        plant.setType(plantType);
+                        plant.setDescription(plantDescription);
+                        plant.setWater(plantWater);
+                        plant.setSunlight(plantSunlight);
+                        plant.setFertilizer(plantFertilizer);
+                        uploadFile();
+                        AddFragmentDirections.ActionAddFragmentToHomeFragment action = AddFragmentDirections.actionAddFragmentToHomeFragment();
+                        Navigation.findNavController(view).navigate(action);
+                    } else if (imageUri == null && plantList.get(0) != null) {
+                        editPlantDescription = getView().findViewById(R.id.editTextTextPlantDescriptionDetails);
+                        editPlantType = getView().findViewById(R.id.editTextTextPlantNameDetails);
+                        editPlantWater = getView().findViewById(R.id.editTextEditWater);
+                        editPlantSunlight = getView().findViewById(R.id.editTextEditSun);
+                        editPlantFertilizer = getView().findViewById(R.id.editTextEditFertilizer);
+                        plantType = editPlantType.getText().toString();
+                        plantDescription = editPlantDescription.getText().toString();
+                        plantWater = Integer.parseInt(editPlantWater.getText().toString());
+                        plantSunlight = Integer.parseInt(editPlantSunlight.getText().toString());
+                        plantFertilizer = Integer.parseInt(editPlantFertilizer.getText().toString());
+
+                        plant.setType(plantType);
+                        plant.setDescription(plantDescription);
+                        plant.setWater(plantWater);
+                        plant.setSunlight(plantSunlight);
+                        plant.setFertilizer(plantFertilizer);
+                        plant.setImageID(plantList.get(0).getImageID());
+                        plantList.remove(0);
 
 
+                        plantCollectionReference.add(plant);
+                        AddFragmentDirections.ActionAddFragmentToHomeFragment action = AddFragmentDirections.actionAddFragmentToHomeFragment();
+                        Navigation.findNavController(view).navigate(action);
+                    } else {
+                        Log.d("ff", plantList.get(0).getType());
 
-                    plantCollectionReference.add(plant);
-                    AddFragmentDirections.ActionAddFragmentToHomeFragment action = AddFragmentDirections.actionAddFragmentToHomeFragment();
-                    Navigation.findNavController(view).navigate(action);
-                }else{
-                    Log.d("ff",plantList.get(0).getType());
-
-                    Toast.makeText(getContext(), "Need to add a image!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "Need to add a image!", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         });

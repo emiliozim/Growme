@@ -32,4 +32,5 @@
     <string name="select_plant">Select plant</string>
     <string name="home">Home</string>
     <string name="logout">Logout</string>
+    <string name="fertilizer_scale_0_8">fertilizer scale 0-8</string>
 </resources>

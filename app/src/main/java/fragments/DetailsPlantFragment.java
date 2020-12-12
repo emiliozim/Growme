@@ -41,6 +41,7 @@ public class DetailsPlantFragment extends Fragment {
     private ProgressBar progressBarWater, progressBarSun, progressBarFertilizer;
     private Plant plant;
     private DocumentReference documentReference;
+    private Button btnInfoSun;
 
 
     public DetailsPlantFragment() {
@@ -77,7 +78,7 @@ public class DetailsPlantFragment extends Fragment {
 
         btnSave = view.findViewById(R.id.btnDetailsEdit);
         btnEdit = view.findViewById(R.id.floatingActionButtonDetailsEdit);
-
+        btnInfoSun = view.findViewById(R.id.btnInfoSunInDetails);
 
         FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -95,27 +96,44 @@ public class DetailsPlantFragment extends Fragment {
                 editTextWater.setFocusable(true);
                 editTextSun.setFocusable(true);
                 editTextFertilizer.setFocusable(true);
+                btnInfoSun.setVisibility(View.VISIBLE);
+                btnInfoSun.setClickable(true);
 
 
 
             }
         });
 
+        btnInfoSun.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {Toast.makeText(getContext(),"Enter only (north, NE, NW, east, west, SE, SW, south) ", Toast.LENGTH_LONG).show();
 
+
+            }
+        });
 
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // documentReference.update("type", "s","s");
-                documentReference.update("type", name.getText().toString());
-                documentReference.update("description", description.getText().toString());
-                documentReference.update("water", Integer.parseInt(editTextWater.getText().toString()));
+                if(!editTextSun.getText().toString().matches("[northNENWeastwestSESWsouth]+")) {
+                    Toast.makeText(getContext(), "Sun filed can only contain (north, NE, NW, east, west, SE, SW, south) ", Toast.LENGTH_LONG).show();
+                }else if(!editTextWater.getText().toString().matches("[1-7]+")){
+                    Toast.makeText(getContext(), "Water field can only contain numbers (1 - 7)", Toast.LENGTH_LONG).show();
 
-                documentReference.update("sunlight", Integer.parseInt(String.valueOf(plant.getLocationArray().indexOf(editTextSun.getText().toString()))));
-                documentReference.update("fertilizer",  Integer.parseInt(editTextFertilizer.getText().toString()));
-                Toast.makeText(getContext(), "Plant Updated", Toast.LENGTH_SHORT).show();
-                 DetailsPlantFragmentDirections.ActionDetailsPlantFragmentToHomeFragment action = DetailsPlantFragmentDirections.actionDetailsPlantFragmentToHomeFragment();
-                 Navigation.findNavController(view).navigate(action);
+                }else if(!editTextFertilizer.getText().toString().matches("[0-8]+")){
+                    Toast.makeText(getContext(), "Fertilizer field can only contain numbers (0 - 8)", Toast.LENGTH_LONG).show();
+                }else{
+
+                    documentReference.update("sunlight", Integer.parseInt(String.valueOf(plant.getLocationArray().indexOf(editTextSun.getText().toString()))));
+                    documentReference.update("type", name.getText().toString());
+                    documentReference.update("description", description.getText().toString());
+                    documentReference.update("water", Integer.parseInt(editTextWater.getText().toString()));
+                    documentReference.update("fertilizer",  Integer.parseInt(editTextFertilizer.getText().toString()));
+                    Toast.makeText(getContext(), "Plant Updated", Toast.LENGTH_SHORT).show();
+                    DetailsPlantFragmentDirections.ActionDetailsPlantFragmentToHomeFragment action = DetailsPlantFragmentDirections.actionDetailsPlantFragmentToHomeFragment();
+                    Navigation.findNavController(view).navigate(action);
+                }
             }
         });
 
