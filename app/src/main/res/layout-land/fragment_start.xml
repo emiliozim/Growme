@@ -67,13 +67,12 @@
         android:id="@+id/textView3"
         android:layout_width="373dp"
         android:layout_height="127dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="160dp"
         android:text="@string/welcome_to_growme_this_is_a_plant_organiser_app_to_keep_your_plants_happy_an_healthy_log_in_and_get_started_if_you_are_new_here_sign_up_with_one_simple_button_click"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
