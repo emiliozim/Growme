@@ -2,8 +2,16 @@ package model;
 
 
 
+import android.widget.Toast;
+
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import fragments.ListFragment;
 
 
 public class Plant {
@@ -12,7 +20,7 @@ public class Plant {
     private int water, sunlight, fertilizer;
     private String uriImage;
     private List<String> locationArray = new ArrayList();
-
+    private Date startDate, stopDate;
 
     public Plant(){
     }
@@ -38,6 +46,22 @@ public class Plant {
     public Plant(String type, String description){
         this.type = type;
         this.description = description;
+    }
+
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
+    public Date getStopDate() {
+        return stopDate;
+    }
+
+    public void setStopDate(Date stopDate) {
+        this.stopDate = stopDate;
     }
 
     public int getWater() {
@@ -118,5 +142,54 @@ public class Plant {
         }
         return locationArray;
     }
+    public Date dateCalc(Date date){
 
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+
+
+        cal.add(Calendar.DATE, this.getWater());
+
+// convert calendar to date
+        date = cal.getTime();
+
+        System.out.println(date);
+        return date;
+    }
+
+    public String dateDiffDays(Date startDate, Date stopDate){
+
+        startDate = new Date();
+
+        long difference_In_Time = stopDate.getTime() - startDate.getTime();
+
+        long difference_In_Seconds
+                = (difference_In_Time
+                / 1000)
+                % 60;
+
+        long difference_In_Minutes
+                = (difference_In_Time
+                / (1000 * 60))
+                % 60;
+
+        long difference_In_Hours
+                = (difference_In_Time
+                / (1000 * 60 * 60))
+                % 24;
+
+
+        long difference_In_Days
+                = (difference_In_Time
+                / (1000 * 60 * 60 * 24))
+                % 365;
+
+
+        if(difference_In_Days < 0){
+            Toast.makeText(new ListFragment().getContext() , "Voow", Toast.LENGTH_SHORT).show();
+        }
+
+        return ("Time left to water plant is " + difference_In_Days +  " day(s)" +
+                ", " + difference_In_Hours + " hour(s) and " + difference_In_Minutes+ " minute(s)") ;
+    }
 }

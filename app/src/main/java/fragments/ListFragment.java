@@ -2,10 +2,12 @@ package fragments;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -31,8 +33,10 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.lang.reflect.Array;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import adapter.PlantRecyclerAdapter;
@@ -46,17 +50,16 @@ public class ListFragment extends Fragment {
     private static List<String> plantUidListTodoStatic ;
 
     private List<Plant> plantListTodoStatic = new ArrayList<>();
-    List<String> plantUidListTodo  = new ArrayList<>();
     String[] arrayListPlantNames;
     List<String> addedTodoList;
     boolean[] addedPlants;
     ImageView btnAddPlantsTodoList;
     ArrayList<Integer> mUser = new ArrayList<>();
-    private FirebaseFirestore firebaseDB;
+    FirebaseFirestore firebaseDB;
     private CollectionReference plantCollectionReference;
     private TodoRecyclerAdapter plantRecyclerAdapter;
     private ListenerRegistration listenerRegistration;
-    private FirebaseUser user;
+    FirebaseUser user;
 
 
     public ListFragment() {
@@ -164,15 +167,19 @@ public class ListFragment extends Fragment {
                 });
                 builder.setCancelable(false);
                 builder.setPositiveButton("Add", new DialogInterface.OnClickListener() {
+
                     @Override
                     public void onClick(DialogInterface dialogInterface, int pos) {
 
                         for (int i = 0; i < mUser.size(); i++) {
                             if(!addedTodoList.contains(arrayListPlantNames[mUser.get(i)])) {
                                 addedTodoList.add(arrayListPlantNames[mUser.get(i)]);
-                                for (Plant APlant : HomeFragment.getPlantList()) {
-                                    if(APlant.getType().equals(arrayListPlantNames[mUser.get(i)])){
-                                      plantCollectionReference.add(APlant);
+                                for (Plant aPlant : HomeFragment.getPlantList()) {
+                                    if(aPlant.getType().equals(arrayListPlantNames[mUser.get(i)])){
+
+                                      aPlant.setStartDate(new Date());
+                                      aPlant.setStopDate(aPlant.dateCalc(aPlant.getStartDate()));
+                                     plantCollectionReference.add(aPlant);
                                     }
                                 }
 

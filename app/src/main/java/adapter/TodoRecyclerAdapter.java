@@ -18,7 +18,6 @@ import androidx.annotation.NonNull;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -26,13 +25,10 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
 import ezim.growme.R;
-import fragments.HomeFragment;
-import fragments.HomeFragmentDirections;
 import fragments.ListFragment;
 import model.Plant;
 
@@ -106,13 +102,6 @@ public class TodoRecyclerAdapter extends RecyclerView.Adapter<TodoRecyclerAdapte
             super(itemView);
             typeTextView = itemView.findViewById(R.id.plantNameTextViewTodo);
             waterTextView = itemView.findViewById(R.id.textViewWaterTimer);
-            Date currentDate = new Date();
-            Calendar alarmDate = Calendar.getInstance();
-            alarmDate.setTime(currentDate);
-            alarmDate.add(Calendar.DATE, 5);
-            Date currentDatePlusWaterTimer = alarmDate.getTime();
-            Log.d("emilio", "Date  " + currentDate.toString());
-            Log.d("emilio", "Date  " + currentDatePlusWaterTimer.toString());
             firebaseDB = FirebaseFirestore.getInstance();
             user = FirebaseAuth.getInstance().getCurrentUser();
             plantCollectionReference = firebaseDB.collection(user.getEmail()+"Todo");
@@ -128,7 +117,7 @@ public class TodoRecyclerAdapter extends RecyclerView.Adapter<TodoRecyclerAdapte
         public void setPlant(Plant plantToDisplay, int position) {
 
             typeTextView.setText(plantToDisplay.getType());
-            waterTextView.setText(String.valueOf(plantToDisplay.getWater()));
+            waterTextView.setText(plantToDisplay.dateDiffDays(plantToDisplay.getStartDate(),plantToDisplay.getStopDate()));
             String plantImage = plantToDisplay.getImageID();
 
             this.plant = plantToDisplay;
