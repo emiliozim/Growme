@@ -34,4 +34,6 @@
     <string name="logout">Logout</string>
     <string name="fertilizer_scale_0_8">fertilizer scale 0-8</string>
     <string name="list">list</string>
+    <string name="water_timer">water timer</string>
+    <string name="a_plant">a Plant</string>
 </resources>

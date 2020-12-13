@@ -90,6 +90,7 @@ public class HomeFragment extends Fragment {
 
                     switch (documentChange.getType()) {
                         case ADDED:
+                            Log.d("db", "ADDED HOME" );
                             plantList.add(plant);
                             plantUidList.add(plant.getUid());
                             plantRecyclerAdapter.notifyItemInserted(plantList.size()-1);
