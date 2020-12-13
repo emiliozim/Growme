@@ -171,6 +171,7 @@ public class HomeFragment extends Fragment {
 
             plantRecyclerView.setLayoutManager(new LinearLayoutManager(plantRecyclerView.getContext()));
 
+
     }
 
 

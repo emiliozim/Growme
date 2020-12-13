@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="fragments.AddFragment">
+
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btnAddPlantToList"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:src="@drawable/plus_button"
+        app:backgroundTint="@color/primaryColor"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:contentDescription="@string/add_plant_to_list" />
+
+    <EditText
+        android:id="@+id/editTextTextPlantNameDetails"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:autofillHints="Name of the plant"
+        android:ems="10"
+        android:hint="@string/plant_name"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toBottomOf="@+id/autoCompleteTextViewAdd"
+        app:layout_constraintStart_toEndOf="@+id/autoCompleteTextViewAdd"
+        app:layout_constraintTop_toTopOf="@+id/autoCompleteTextViewAdd" />
+
+    <EditText
+        android:id="@+id/editTextTextPlantDescriptionDetails"
+        android:layout_width="0dp"
+        android:layout_height="56dp"
+        android:layout_marginTop="8dp"
+        android:autofillHints="Description of the plant"
+        android:ems="10"
+        android:gravity="start|top"
+        android:hint="@string/description"
+        android:inputType="textMultiLine"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextTextPlantNameDetails" />
+
+    <ImageView
+        android:id="@+id/addPictureImageView"
+        android:layout_width="150dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="12dp"
+        android:contentDescription="@string/plant_image"
+        app:layout_constraintEnd_toEndOf="@+id/textView4"
+        app:layout_constraintHorizontal_bias="0.609"
+        app:layout_constraintStart_toStartOf="@+id/textView4"
+        app:layout_constraintTop_toBottomOf="@+id/textView4"
+        tools:src="@drawable/imageholder" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnAddPictureFromCamera"
+        android:layout_width="52dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:clickable="true"
+        android:contentDescription="@string/open_camera"
+        android:focusable="true"
+        app:backgroundTint="@color/primaryColor"
+        app:icon="@drawable/camera_button"
+        app:iconTint="@color/design_default_color_on_secondary"
+        app:layout_constraintBottom_toBottomOf="@+id/addPictureImageView"
+        app:layout_constraintStart_toEndOf="@+id/addPictureImageView" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnAddPictureFromGallery"
+        android:layout_width="52dp"
+        android:layout_height="49dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:contentDescription="@string/open_gallery"
+        android:gravity="center"
+        app:backgroundTint="@color/primaryColor"
+        app:icon="@drawable/gallery_button"
+        app:iconTint="@color/design_default_color_on_secondary"
+        app:layout_constraintBottom_toBottomOf="@+id/addPictureImageView"
+        app:layout_constraintStart_toEndOf="@+id/addPictureImageView"
+        app:layout_constraintTop_toTopOf="@+id/addPictureImageView"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnInfoWaterInAdd"
+        android:layout_width="19dp"
+        android:layout_height="18dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:background="@drawable/ic_action_info"
+        android:contentDescription="@string/open_gallery"
+        android:gravity="center"
+        app:backgroundTint="@android:color/darker_gray"
+        app:iconTint="@color/design_default_color_on_secondary"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewEditWater"
+        app:layout_constraintStart_toEndOf="@+id/textViewEditWater"
+        app:layout_constraintTop_toTopOf="@+id/textViewEditWater" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnInfoSunInAdd"
+        android:layout_width="19dp"
+        android:layout_height="18dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:background="@drawable/ic_action_info"
+        android:contentDescription="@string/open_gallery"
+        android:gravity="center"
+        app:backgroundTint="@android:color/darker_gray"
+        app:iconTint="@color/design_default_color_on_secondary"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewEditSun"
+        app:layout_constraintStart_toEndOf="@+id/textViewEditSun"
+        app:layout_constraintTop_toTopOf="@+id/textViewEditSun" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnInfoFertilizerInAdd"
+        android:layout_width="19dp"
+        android:layout_height="18dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:background="@drawable/ic_action_info"
+        android:contentDescription="@string/open_gallery"
+        android:gravity="center"
+        app:backgroundTint="@android:color/darker_gray"
+        app:iconTint="@color/design_default_color_on_secondary"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewEditFertilizer"
+        app:layout_constraintStart_toEndOf="@+id/textViewEditFertilizer"
+        app:layout_constraintTop_toTopOf="@+id/textViewEditFertilizer" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/add_image"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.834"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextTextPlantDescriptionDetails" />
+
+    <TextView
+        android:id="@+id/textViewEditWater"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/water_scale_1_7"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextTextPlantDescriptionDetails" />
+
+    <TextView
+        android:id="@+id/textViewEditSun"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:text="@string/sunlight_scale_1_8"
+        app:layout_constraintEnd_toEndOf="@+id/textViewEditWater"
+        app:layout_constraintStart_toStartOf="@+id/textViewEditWater"
+        app:layout_constraintTop_toBottomOf="@+id/textViewEditWater" />
+
+    <TextView
+        android:id="@+id/textViewEditFertilizer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="60dp"
+        android:layout_marginLeft="60dp"
+        android:text="@string/fertilizer_scale_0_8"
+        app:layout_constraintBottom_toTopOf="@+id/editTextEditWater"
+        app:layout_constraintStart_toEndOf="@+id/textViewEditWater"
+        app:layout_constraintTop_toTopOf="@+id/textViewEditWater" />
+
+    <EditText
+        android:id="@+id/editTextEditFertilizer"
+        android:layout_width="58dp"
+        android:layout_height="44dp"
+        android:autofillHints="Number 1-8"
+        android:ems="10"
+        android:hint="@string/number"
+        android:inputType="textPersonName"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="@+id/textViewEditFertilizer"
+        app:layout_constraintStart_toStartOf="@+id/textViewEditFertilizer"
+        app:layout_constraintTop_toBottomOf="@+id/textViewEditFertilizer" />
+
+    <EditText
+        android:id="@+id/editTextEditSun"
+        android:layout_width="58dp"
+        android:layout_height="44dp"
+        android:autofillHints="Number 1-8"
+        android:ems="10"
+        android:hint="@string/number"
+        android:inputType="textPersonName"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="@+id/textViewEditSun"
+        app:layout_constraintStart_toStartOf="@+id/textViewEditSun"
+        app:layout_constraintTop_toBottomOf="@+id/textViewEditSun" />
+
+    <EditText
+        android:id="@+id/editTextEditWater"
+        android:layout_width="58dp"
+        android:layout_height="44dp"
+        android:autofillHints="Number 1-8"
+        android:ems="10"
+        android:hint="@string/number"
+        android:inputType="textPersonName"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="@+id/textViewEditWater"
+        app:layout_constraintStart_toStartOf="@+id/textViewEditWater"
+        app:layout_constraintTop_toBottomOf="@+id/textViewEditWater" />
+
+    <AutoCompleteTextView
+        android:id="@+id/autoCompleteTextViewAdd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:completionHint="Select a plant"
+        android:completionThreshold="1"
+        android:hint="@string/select_plant"
+        android:text=""
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.328"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

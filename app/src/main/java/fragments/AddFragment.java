@@ -240,7 +240,7 @@ public class AddFragment extends Fragment {
                         uploadFile();
                         AddFragmentDirections.ActionAddFragmentToHomeFragment action = AddFragmentDirections.actionAddFragmentToHomeFragment();
                         Navigation.findNavController(view).navigate(action);
-                    } else if (imageUri == null && plantList.get(0) != null) {
+                    } else if (imageUri == null && plantList.size() > 0 && plantList.get(0) != null) {
                         editPlantDescription = getView().findViewById(R.id.editTextTextPlantDescriptionDetails);
                         editPlantType = getView().findViewById(R.id.editTextTextPlantNameDetails);
                         editPlantWater = getView().findViewById(R.id.editTextEditWater);
@@ -257,15 +257,14 @@ public class AddFragment extends Fragment {
                         plant.setWater(plantWater);
                         plant.setSunlight(plantSunlight);
                         plant.setFertilizer(plantFertilizer);
-                        plant.setImageID(plantList.get(0).getImageID());
+                       // plant.setImageID(plantList.get(0).getImageID());
                         plantList.remove(0);
-
-
+                        Log.d("land","imageUri == null && plantList.get(0) != null ==== " + plantList.get(0).getImageID() );
                         plantCollectionReference.add(plant);
                         AddFragmentDirections.ActionAddFragmentToHomeFragment action = AddFragmentDirections.actionAddFragmentToHomeFragment();
                         Navigation.findNavController(view).navigate(action);
                     } else {
-                        Log.d("ff", plantList.get(0).getType());
+
 
                         Toast.makeText(getContext(), "Need to add a image!", Toast.LENGTH_SHORT).show();
                     }
