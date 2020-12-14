@@ -31,7 +31,7 @@ import java.util.List;
 import ezim.growme.R;
 import fragments.ListFragment;
 import model.Plant;
-
+// from lecture
 public class TodoRecyclerAdapter extends RecyclerView.Adapter<TodoRecyclerAdapter.PlantViewHolderTodo> {
     private static final String TAG = PlantRecyclerAdapter.class.getSimpleName();
 
@@ -84,12 +84,7 @@ public class TodoRecyclerAdapter extends RecyclerView.Adapter<TodoRecyclerAdapte
 
     }
 
-    private void addItem(int position, Plant newPlant){
-        plantList.add(position, newPlant);
-        notifyItemInserted(position);
-        notifyItemRangeChanged(position, plantList.size());
 
-    }
 
     public class PlantViewHolderTodo extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView typeTextView, descriptionTextView, waterTextView;
@@ -117,8 +112,8 @@ public class TodoRecyclerAdapter extends RecyclerView.Adapter<TodoRecyclerAdapte
         public void setPlant(Plant plantToDisplay, int position) {
 
             typeTextView.setText(plantToDisplay.getType());
-            waterTextView.setText(plantToDisplay.dateDiffDays(plantToDisplay.getStartDate(),plantToDisplay.getStopDate()));
-            String plantImage = plantToDisplay.getImageID();
+            waterTextView.setText(plantToDisplay.dateDiff(plantToDisplay.getStopDate()));
+
 
             this.plant = plantToDisplay;
             this.position = position;
@@ -168,12 +163,6 @@ public class TodoRecyclerAdapter extends RecyclerView.Adapter<TodoRecyclerAdapte
                     alert11.show();
 
                     break;
-                case R.id.thumbnailImageViewTodo:
-
-                    Log.d("emilio", "thunb : " + String.valueOf(position));
-
-                    break;
-
 
                 default:
                     Log.d("emilio", "pos : " + String.valueOf(position));

@@ -71,7 +71,7 @@ public class HomeFragment extends Fragment {
     public static void setPlantUidList(List<String> plantUidList) {
         HomeFragment.plantUidList = plantUidList;
     }
-
+    // from lecture
     private void createFireStoreReadListener() {
 
         listenerRegistration = plantCollectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
@@ -150,14 +150,6 @@ public class HomeFragment extends Fragment {
         plantUidList =  new ArrayList<>();
         plantList = new ArrayList<>();
         btn.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_homeFragment_to_addFragment));
-       /*btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                for (String string : plantUidList) {
-                    Log.d("db", string);
-                }
-            }
-        });*/
         Bundle arguments = getArguments();
 
         TextView textView = view.findViewById(R.id.textViewUsername);

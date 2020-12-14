@@ -107,7 +107,7 @@ public class AddFragment extends Fragment {
     }
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        // Assign variable
+        // initialize
         AutoCompleteTextView autoCompleteTextView = view.findViewById(R.id.autoCompleteTextViewAdd);
         imageView = view.findViewById(R.id.addPictureImageView);
         imageView.setImageResource(R.drawable.imageholder);
@@ -259,7 +259,7 @@ public class AddFragment extends Fragment {
                         plant.setFertilizer(plantFertilizer);
                        // plant.setImageID(plantList.get(0).getImageID());
                         plantList.remove(0);
-                        Log.d("land","imageUri == null && plantList.get(0) != null ==== " + plantList.get(0).getImageID() );
+
                         plantCollectionReference.add(plant);
                         AddFragmentDirections.ActionAddFragmentToHomeFragment action = AddFragmentDirections.actionAddFragmentToHomeFragment();
                         Navigation.findNavController(view).navigate(action);
@@ -315,7 +315,7 @@ public class AddFragment extends Fragment {
 
     }
 
-
+//https://www.youtube.com/watch?v=Z8Cc3QTjrUA&ab_channel=ARSLTech
     private String getFileExtension(Uri uri){
         ContentResolver contentResolver = getContext().getContentResolver();
         MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
@@ -347,7 +347,7 @@ public class AddFragment extends Fragment {
         }
     }
 
-    // add image form camera
+    //https://www.youtube.com/watch?v=Z8Cc3QTjrUA&ab_channel=ARSLTech
     private void dispatchTakePictureIntent() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         try {
@@ -356,6 +356,7 @@ public class AddFragment extends Fragment {
             Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
+    // https://stackoverflow.com/questions/8295773/how-can-i-transform-a-bitmap-into-a-uri
     public Uri getImageUri(Context inContext, Bitmap inImage) {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);

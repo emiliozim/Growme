@@ -2,12 +2,10 @@ package fragments;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,9 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -32,14 +28,11 @@ import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import java.lang.reflect.Array;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
-import adapter.PlantRecyclerAdapter;
 import adapter.TodoRecyclerAdapter;
 import ezim.growme.R;
 import model.Plant;
@@ -54,7 +47,7 @@ public class ListFragment extends Fragment {
     List<String> addedTodoList;
     boolean[] addedPlants;
     ImageView btnAddPlantsTodoList;
-    ArrayList<Integer> mUser = new ArrayList<>();
+    ArrayList<Integer> itemCheckedInMultiChoice = new ArrayList<>();
     FirebaseFirestore firebaseDB;
     private CollectionReference plantCollectionReference;
     private TodoRecyclerAdapter plantRecyclerAdapter;
@@ -91,76 +84,47 @@ public class ListFragment extends Fragment {
         return plantUidListTodoStatic;
     }
 
-    public static void setPlantUidListTodoStatic(List<String> plantUidListTodoStatic) {
-        ListFragment.plantUidListTodoStatic = plantUidListTodoStatic;
-    }
+
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-
-        plantUidListTodoStatic = new ArrayList<>();
-
+        // initialize add button
         btnAddPlantsTodoList = view.findViewById(R.id.btnAddToDo);
-        final List<String> plantUidListToDo;
-
-        plantUidListToDo = HomeFragment.getPlantUidList();
-        plantUidListToDo.add("TEST");
+        // initialize arrays
+        plantUidListTodoStatic = new ArrayList<>();
         arrayListPlantNames = new String[HomeFragment.getPlantList().size()];
         addedPlants = new boolean[HomeFragment.getPlantList().size()];
         for(int i = 0; i < HomeFragment.getPlantList().size(); i++ ) {
             arrayListPlantNames[i] =  HomeFragment.getPlantList().get(i).getType();
         }
-
+        // initialize RecyclerView
         RecyclerView plantRecyclerView = view.findViewById(R.id.plantRecyclerViewTodo);
-
         plantRecyclerAdapter = new TodoRecyclerAdapter(plantRecyclerView.getContext(), plantListTodoStatic);
-
         plantRecyclerView.setAdapter(plantRecyclerAdapter);
-
         plantRecyclerView.setLayoutManager(new LinearLayoutManager(plantRecyclerView.getContext()));
-        //final ArrayAdapter arrayAdapter = new ArrayAdapter(getContext(), android.R.layout.simple_list_item_1,addedTodoList);
-        for (int i = 0; i < plantListTodoStatic.size() ; i++) {
-            Log.d("db", "In the list " + plantListTodoStatic.get(i).getType());
 
-        }
-        Log.d("db", "test");
         btnAddPlantsTodoList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-
+                // reset arrays
                 Arrays.fill(addedPlants, false);
                 addedTodoList = new ArrayList<>();
-                mUser.clear();
+                itemCheckedInMultiChoice.clear();
+                /// check off items in multi choice
+                checkCffItemsInMultiChoice();
 
-                for (int i = 0; i < arrayListPlantNames.length ; i++) {
-                    for (int j = 0; j <plantListTodoStatic.size() ; j++) {
-                        if(plantListTodoStatic.get(j).getType().equals(arrayListPlantNames[i])) {
-                            mUser.add(i);
-                            addedPlants[i] = true;
-                            addedTodoList.add((plantListTodoStatic.get(j).getType()));
-                            Log.d("db", "Tell me " + String.valueOf(i) + " " + String.valueOf(j) + " " + plantListTodoStatic.get(j).getType() + ' ' + arrayListPlantNames[j]);
-                        }
-                    }
-
-
-                }
                 builder.setTitle("Your plants");
-
                 builder.setMultiChoiceItems(arrayListPlantNames, addedPlants, new DialogInterface.OnMultiChoiceClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int position, boolean isChecked) {
+                        // checks witch item should be checked off
                         if(isChecked){
-                            if(!mUser.contains(position)){
-                                mUser.add(position);
-
-                                Log.d("multi ", "multi" + String.valueOf(position));
-
-
+                            if(!itemCheckedInMultiChoice.contains(position)){
+                                itemCheckedInMultiChoice.add(position);
                             }else {
-                                mUser.remove(position);
+                                itemCheckedInMultiChoice.remove(position);
                             }
                         }
                     }
@@ -170,12 +134,12 @@ public class ListFragment extends Fragment {
 
                     @Override
                     public void onClick(DialogInterface dialogInterface, int pos) {
-
-                        for (int i = 0; i < mUser.size(); i++) {
-                            if(!addedTodoList.contains(arrayListPlantNames[mUser.get(i)])) {
-                                addedTodoList.add(arrayListPlantNames[mUser.get(i)]);
+                        // add plants to list
+                        for (int i = 0; i < itemCheckedInMultiChoice.size(); i++) {
+                            if(!addedTodoList.contains(arrayListPlantNames[itemCheckedInMultiChoice.get(i)])) {
+                                addedTodoList.add(arrayListPlantNames[itemCheckedInMultiChoice.get(i)]);
                                 for (Plant aPlant : HomeFragment.getPlantList()) {
-                                    if(aPlant.getType().equals(arrayListPlantNames[mUser.get(i)])){
+                                    if(aPlant.getType().equals(arrayListPlantNames[itemCheckedInMultiChoice.get(i)])){
 
                                       aPlant.setStartDate(new Date());
                                       aPlant.setStopDate(aPlant.dateCalc(aPlant.getStartDate()));
@@ -185,13 +149,6 @@ public class ListFragment extends Fragment {
 
                             }
                         }
-
-
-                        for(int i = 0; i < addedTodoList.size(); i++ ) {
-                            Log.d("list", addedTodoList.get(i));
-                        }
-                       /* ArrayAdapter arrayAdapter = new ArrayAdapter(getContext(), android.R.layout.simple_list_item_1,addedTodoList);
-                        listView.setAdapter(arrayAdapter);*/
                     }
                 });
                 builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -200,33 +157,14 @@ public class ListFragment extends Fragment {
                         dialogInterface.dismiss();
                     }
                 });
-                builder.setNeutralButton("Clear all", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        for (int j = 0; j < addedPlants.length; j++) {
-                            addedPlants[j] = false;
-                            mUser.clear();
-                            addedTodoList.clear();
-                        }
-
-                        /*listView.setAdapter(arrayAdapter);*/
-                    }
-                });
                 AlertDialog dialog = builder.create();
                 dialog.show();
-
             }
         });
 
-        for (int i = 0; i < plantListTodoStatic.size() ; i++) {
-            Log.d("db", "In the list " + plantListTodoStatic.get(i).getType());
-
-        }
-
-
     }
 
-
+    // form lecture
     private void createFireStoreReadListener() {
 
         listenerRegistration = plantCollectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
@@ -264,12 +202,14 @@ public class ListFragment extends Fragment {
             }
         });
     }
+    // form lecture
     @Override
     public void onResume() {
         super.onResume();
         Log.d("db", "onResume");
         createFireStoreReadListener();
     }
+    // form lecture
     @Override
     public void onPause() {
         super.onPause();
@@ -280,4 +220,15 @@ public class ListFragment extends Fragment {
         }
     }
 
+    public void checkCffItemsInMultiChoice() {
+        for (int i = 0; i < arrayListPlantNames.length; i++) {
+            for (int j = 0; j < plantListTodoStatic.size(); j++) {
+                if (plantListTodoStatic.get(j).getType().equals(arrayListPlantNames[i])) {
+                    itemCheckedInMultiChoice.add(i);
+                    addedPlants[i] = true;
+                    addedTodoList.add((plantListTodoStatic.get(j).getType()));
+                }
+            }
+        }
+    }
 }

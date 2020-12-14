@@ -146,50 +146,29 @@ public class Plant {
 
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
-
-
         cal.add(Calendar.DATE, this.getWater());
-
-// convert calendar to date
         date = cal.getTime();
 
-        System.out.println(date);
         return date;
     }
 
-    public String dateDiffDays(Date startDate, Date stopDate){
+    public String dateDiff(Date stopDate){
 
         startDate = new Date();
+        String string;
 
-        long difference_In_Time = stopDate.getTime() - startDate.getTime();
-
-        long difference_In_Seconds
-                = (difference_In_Time
-                / 1000)
-                % 60;
-
-        long difference_In_Minutes
-                = (difference_In_Time
-                / (1000 * 60))
-                % 60;
-
-        long difference_In_Hours
-                = (difference_In_Time
-                / (1000 * 60 * 60))
-                % 24;
+        long timeLeft = stopDate.getTime() - startDate.getTime();
+        long timeLeftInMinutes = (timeLeft / (1000 * 60)) % 60;
+        long timeLeftInHours = (timeLeft / (1000 * 60 * 60)) % 24;
+        long timeLeftInDays = (timeLeft / (1000 * 60 * 60 * 24)) % 365;
 
 
-        long difference_In_Days
-                = (difference_In_Time
-                / (1000 * 60 * 60 * 24))
-                % 365;
-
-
-        if(difference_In_Days < 0){
-            Toast.makeText(new ListFragment().getContext() , "Voow", Toast.LENGTH_SHORT).show();
+        if(timeLeftInDays < 0){
+            string = ("Water plant!");
+            return string;
         }
-
-        return ("Time left to water plant is " + difference_In_Days +  " day(s)" +
-                ", " + difference_In_Hours + " hour(s) and " + difference_In_Minutes+ " minute(s)") ;
+        string = ("Time left to water plant is " + timeLeftInDays +  " day(s)" +
+                ", " + timeLeftInHours + " hour(s) and " + timeLeftInMinutes+ " minute(s)") ;
+        return string;
     }
 }

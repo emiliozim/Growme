@@ -65,7 +65,7 @@ public class DetailsPlantFragment extends Fragment {
         DetailsPlantFragmentArgs args = DetailsPlantFragmentArgs.fromBundle(arguments);
         final String plantUid = args.getPlantUid();
 
-
+        // initialize
         imageView = view.findViewById(R.id.imageViewDetails);
         name = view.findViewById(R.id.editTextTextPlantNameDetails);
         description = view.findViewById(R.id.editTextTextPlantDescriptionDetails);
@@ -75,7 +75,6 @@ public class DetailsPlantFragment extends Fragment {
         editTextWater = view.findViewById(R.id.editTextWater);
         editTextSun = view.findViewById(R.id.editTextSun);
         editTextFertilizer = view.findViewById(R.id.editTextFertilizer);
-
         btnSave = view.findViewById(R.id.btnDetailsEdit);
         btnEdit = view.findViewById(R.id.floatingActionButtonDetailsEdit);
         btnInfoSun = view.findViewById(R.id.btnInfoSunInDetails);

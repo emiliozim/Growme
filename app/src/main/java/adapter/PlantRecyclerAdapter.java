@@ -40,7 +40,7 @@ import fragments.HomeFragment;
 import fragments.HomeFragmentDirections;
 import fragments.LoginFragmentDirections;
 import model.Plant;
-
+// from lecture
 public class PlantRecyclerAdapter extends RecyclerView.Adapter<PlantRecyclerAdapter.PlantViewHolder> {
     private static final String TAG = PlantRecyclerAdapter.class.getSimpleName();
 
@@ -93,12 +93,6 @@ public class PlantRecyclerAdapter extends RecyclerView.Adapter<PlantRecyclerAdap
 
     }
 
-    private void addItem(int position, Plant newPlant){
-        plantList.add(position, newPlant);
-        notifyItemInserted(position);
-        notifyItemRangeChanged(position, plantList.size());
-
-    }
 
     public class PlantViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView typeTextView, descriptionTextView;
