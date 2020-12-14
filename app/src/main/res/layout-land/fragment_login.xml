@@ -17,7 +17,7 @@
         android:ems="10"
         android:hint="@string/enter_email"
         android:inputType="textPersonName"
-        android:text="@string/username_man_com"
+    
         android:textColor="@android:color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -42,7 +42,6 @@
         android:ems="10"
         android:hint="@string/enter_password"
         android:inputType="textPassword"
-        android:text="@string/_123456"
         app:layout_constraintBottom_toBottomOf="@+id/editTextTextUsername"
         app:layout_constraintStart_toEndOf="@+id/editTextTextUsername"
         app:layout_constraintTop_toTopOf="@+id/editTextTextUsername"
